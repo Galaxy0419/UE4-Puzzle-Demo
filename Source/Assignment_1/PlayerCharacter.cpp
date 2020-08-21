@@ -11,7 +11,7 @@ APlayerCharacter::APlayerCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(false);
-	
+
 	/* Set Skeletal Mesh */
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
 	GetMesh()->SetSkeletalMesh(CharacterSKMeshAsset.Object);
@@ -29,6 +29,7 @@ APlayerCharacter::APlayerCharacter()
 
 	SpringArmComp->TargetArmLength = 256.0f;
 	SpringArmComp->bUsePawnControlRotation = true;
+	SpringArmComp->SetRelativeLocation(FVector(0.0f, 0.0f, 90.0f));
 
 	/* Camera Component */
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
@@ -39,7 +40,7 @@ APlayerCharacter::APlayerCharacter()
 	AutoPossessAI = EAutoPossessAI::Disabled;
 }
 
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 

@@ -22,8 +22,8 @@ private:
 
 public:
 	APlayerCharacter();
-	void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
-	inline void MoveForward(float Axis) { AddMovementInput(GetActorForwardVector(), Axis); };
-	inline void MoveRight(float Axis) { AddMovementInput(GetActorRightVector(), Axis); };
+	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
+	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
 };
