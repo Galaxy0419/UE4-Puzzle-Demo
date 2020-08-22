@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/SpotLightComponent.h"
 #include "Components/InputComponent.h"
 #include "Camera/CameraComponent.h"
 
@@ -19,6 +20,7 @@ class ASSIGNMENT_1_API APlayerCharacter : public ACharacter
 private:
 	USpringArmComponent *SpringArmComp;
 	UCameraComponent *TPCameraComp;
+	USpotLightComponent *FlashLightComp;
 
 public:
 	APlayerCharacter();

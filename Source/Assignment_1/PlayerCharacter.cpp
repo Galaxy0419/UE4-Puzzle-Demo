@@ -35,6 +35,16 @@ APlayerCharacter::APlayerCharacter()
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
 	TPCameraComp->SetupAttachment(SpringArmComp);
 
+	/* Flash Light Component */
+	FlashLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flash Light Component"));
+	FlashLightComp->SetupAttachment(SpringArmComp);
+
+	FlashLightComp->SetRelativeLocation(FVector(16.0f, 0.0f, 32.0f));
+	FlashLightComp->Intensity = 16384.0f;
+	FlashLightComp->AttenuationRadius = 8192.0f;
+	FlashLightComp->InnerConeAngle = 16.0f;
+	FlashLightComp->OuterConeAngle = 32.0f;
+
 	/* Posses by Player */
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	AutoPossessAI = EAutoPossessAI::Disabled;
