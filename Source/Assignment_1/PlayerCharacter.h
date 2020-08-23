@@ -1,14 +1,11 @@
 #pragma once
 
-#include "GameFramework/Character.h"
-#include "GameFramework/Controller.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Components/CapsuleComponent.h"
+#include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SpotLightComponent.h"
 #include "Components/InputComponent.h"
-#include "Camera/CameraComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 
 #include "PlayerCharacter.generated.h"
 
@@ -18,9 +15,9 @@ class ASSIGNMENT_1_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 private:
-	USpringArmComponent *SpringArmComp;
 	UCameraComponent *TPCameraComp;
 	USpotLightComponent *FlashLightComp;
+	USpringArmComponent *SpringArmComp;
 
 public:
 	APlayerCharacter();

@@ -1,7 +1,10 @@
 #include "PlayerCharacter.h"
 
-#include "UObject/ConstructorHelpers.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Materials/Material.h"
+#include "UObject/ConstructorHelpers.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -13,14 +16,14 @@ APlayerCharacter::APlayerCharacter()
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(false);
 
 	/* Set Skeletal Mesh */
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
 	GetMesh()->SetSkeletalMesh(CharacterSKMeshAsset.Object);
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -94.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	ConstructorHelpers::FClassFinder<UAnimInstance> AnumBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnumBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
 	GetMesh()->SetAnimInstanceClass(AnumBPClass.Class);
 
 	/* Spring Arm Component */
@@ -34,6 +37,9 @@ APlayerCharacter::APlayerCharacter()
 	/* Camera Component */
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
 	TPCameraComp->SetupAttachment(SpringArmComp);
+
+	static ConstructorHelpers::FObjectFinder<UMaterial> FogPPMAsset(TEXT("Material'/Game/Materials/PPM_Fog.PPM_Fog'"));
+	TPCameraComp->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, FogPPMAsset.Object));
 
 	/* Flash Light Component */
 	FlashLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flash Light Component"));
