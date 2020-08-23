@@ -64,6 +64,18 @@ void APlayerCharacter::BeginPlay()
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
+
+	/* Create HUD Widget */
+	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Pause.WBP_Pause_C'"));
+	PauseWBP = CreateWidget<UUserWidget>(GetWorld(), PauseWBPClass);
+}
+
+void APlayerCharacter::Pause()
+{
+	PauseWBP->AddToViewport(1);
+	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
@@ -74,4 +86,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause).bExecuteWhenPaused = true;
 }

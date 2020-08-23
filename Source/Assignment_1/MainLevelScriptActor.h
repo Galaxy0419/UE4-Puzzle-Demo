@@ -11,8 +11,8 @@ class ASSIGNMENT_1_API AMainLevelScriptActor : public ALevelScriptActor
 	GENERATED_BODY()
 	
 private:
+	UPROPERTY()
 	UUserWidget *MenuWBP;
-	UUserWidget *EndGameWBP;
 
 public:
 	AMainLevelScriptActor();

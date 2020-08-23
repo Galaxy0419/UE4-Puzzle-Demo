@@ -23,11 +23,15 @@ private:
 	UPROPERTY()
 	UUserWidget *HUDWBP;
 
+	UPROPERTY()
+	UUserWidget *PauseWBP;
+
 public:
 	APlayerCharacter();
 	void BeginPlay() override;
-	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
-
+	
+	void Pause();
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
+	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 };
