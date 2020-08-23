@@ -56,6 +56,16 @@ APlayerCharacter::APlayerCharacter()
 	AutoPossessAI = EAutoPossessAI::Disabled;
 }
 
+void APlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/* Create HUD Widget */
+	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
+	HUDWBP = CreateWidget<UUserWidget>(GetWorld(), HUDWBPClass);
+	HUDWBP->AddToViewport(0);
+}
+
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SpotLightComponent.h"
@@ -19,8 +20,12 @@ private:
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
 
+	UPROPERTY()
+	UUserWidget *HUDWBP;
+
 public:
 	APlayerCharacter();
+	void BeginPlay() override;
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };

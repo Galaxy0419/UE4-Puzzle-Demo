@@ -12,7 +12,6 @@ class ASSIGNMENT_1_API AMainLevelScriptActor : public ALevelScriptActor
 	
 private:
 	UUserWidget *MenuWBP;
-	UUserWidget *HUDWBP;
 	UUserWidget *EndGameWBP;
 
 public:
