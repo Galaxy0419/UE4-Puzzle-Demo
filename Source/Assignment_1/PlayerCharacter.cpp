@@ -7,6 +7,7 @@
 #include "UObject/ConstructorHelpers.h"
 
 APlayerCharacter::APlayerCharacter()
+	: Health(1.0f)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -62,12 +63,15 @@ void APlayerCharacter::BeginPlay()
 
 	/* Create HUD Widget */
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
-	HUDWBP = CreateWidget<UUserWidget>(GetWorld(), HUDWBPClass);
+	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
 
 	/* Create HUD Widget */
 	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Pause.WBP_Pause_C'"));
 	PauseWBP = CreateWidget<UUserWidget>(GetWorld(), PauseWBPClass);
+
+	/* Set Timer for Automatic Health Loss */
+	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &APlayerCharacter::LossHealth, 4.0f, true);
 }
 
 void APlayerCharacter::Pause()
