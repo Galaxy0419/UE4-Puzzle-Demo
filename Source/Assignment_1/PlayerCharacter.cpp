@@ -6,6 +6,8 @@
 #include "Materials/Material.h"
 #include "UObject/ConstructorHelpers.h"
 
+#include "Interactable.h"
+
 APlayerCharacter::APlayerCharacter()
 	: Health(1.0f)
 {
@@ -13,8 +15,9 @@ APlayerCharacter::APlayerCharacter()
 
 	/* Capsule Component */
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
-	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
+	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(false);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnCapsuleBeginOverlap);
 
 	/* Set Skeletal Mesh */
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
@@ -92,4 +95,27 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause).bExecuteWhenPaused = true;
+}
+
+void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
+	UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
+		Cast<IInteractable>(OtherActor)->Interact();
+}
+
+bool APlayerCharacter::UpdateHealth(float DeltaHealth)
+{
+	float NewHealth = Health + DeltaHealth;
+
+	if (NewHealth > 0.0f) {
+		if (NewHealth > 1.0f)
+			NewHealth = 1.0f;
+		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
+		return true;
+	} else if (NewHealth <= 0.0f) {
+		/* Game Over */
+	}
+
+	return false;
 }

@@ -13,6 +13,8 @@
 
 #include "PlayerCharacter.generated.h"
 
+#define FOG_DAMAGE	-0.0625f
+
 UCLASS()
 class ASSIGNMENT_1_API APlayerCharacter : public ACharacter
 {
@@ -37,11 +39,15 @@ private:
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
-	FORCEINLINE void LossHealth() { UpdateHealth(0.0625f); };
+	FORCEINLINE void LossHealth() { UpdateHealth(FOG_DAMAGE); };
 
 public:
 	APlayerCharacter();
 	void BeginPlay() override;
 
-	FORCEINLINE void UpdateHealth(float DeltaHealth) { HUDWBP->HealthProgressBar->SetPercent(Health = Health - DeltaHealth); };
+	UFUNCTION()
+	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
+		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	bool UpdateHealth(float DeltaHealth);
 };
