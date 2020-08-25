@@ -1,5 +1,7 @@
 #include "MainLevelScriptActor.h"
 
+#include "Kismet/GameplayStatics.h"
+
 AMainLevelScriptActor::AMainLevelScriptActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -17,4 +19,7 @@ void AMainLevelScriptActor::BeginPlay()
 	/* Show Mouse Cursor */
 	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
 	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+
+	/* Pause The Game First */
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }

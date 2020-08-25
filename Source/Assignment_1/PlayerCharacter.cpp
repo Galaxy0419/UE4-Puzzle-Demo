@@ -96,7 +96,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
-	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause).bExecuteWhenPaused = true;
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
 }
 
 void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
