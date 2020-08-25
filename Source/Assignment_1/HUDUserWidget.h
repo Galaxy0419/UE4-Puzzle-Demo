@@ -5,7 +5,7 @@
 
 #include "HUDUserWidget.generated.h"
 
-UCLASS()
+UCLASS(meta = (DisableNativeTick))
 class ASSIGNMENT_1_API UHUDUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
