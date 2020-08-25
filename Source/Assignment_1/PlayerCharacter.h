@@ -10,6 +10,7 @@
 #include "TimerManager.h"
 
 #include "HUDUserWidget.h"
+#include "GameOverUserWidget.h"
 
 #include "PlayerCharacter.generated.h"
 
@@ -33,6 +34,9 @@ private:
 
 	UPROPERTY()
 	UUserWidget *PauseWBP;
+
+	UPROPERTY()
+	UGameOverUserWidget *GameOverWBP;
 
 	void Pause();
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
