@@ -80,16 +80,10 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/* Create Widgets */
+	/* Create HUD Widget */
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
-
-	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Pause.WBP_Pause_C'"));
-	PauseWBP = CreateWidget<UUserWidget>(GetWorld(), PauseWBPClass);
-	
-	UClass *GameOverWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Game_Over.WBP_Game_Over_C'"));
-	GameOverWBP = CreateWidget<UGameOverUserWidget>(GetWorld(), GameOverWBPClass);
 
 	/* Set Timer for Automatic Health Loss */
 	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &APlayerCharacter::LossHealth, 4.0f, true);
@@ -97,10 +91,7 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::Pause()
 {
-	PauseWBP->AddToViewport(1);
-	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
-	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
+	OnGamePlayStateChange.Broadcast(EGamePlayState::Paused);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
@@ -132,11 +123,7 @@ bool APlayerCharacter::UpdateHealth(float DeltaHealth)
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 		return true;
 	} else if (NewHealth <= 0.0f) {
-		GameOverWBP->WinLostText->SetText(FText::FromString("You lost and died in the fog!"));
-		GameOverWBP->AddToViewport(1);
-		GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
-		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
-		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);
 	}
 
 	return false;
