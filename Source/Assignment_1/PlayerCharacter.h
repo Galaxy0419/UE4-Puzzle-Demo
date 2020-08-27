@@ -40,9 +40,9 @@ private:
 	UPROPERTY()
 	UHUDUserWidget *HUDWBP;
 
-	void Pause();
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
+	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); };
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 	FORCEINLINE void LossHealth() { UpdateHealth(FOG_DAMAGE); };

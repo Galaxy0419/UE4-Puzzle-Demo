@@ -89,11 +89,6 @@ void APlayerCharacter::BeginPlay()
 	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &APlayerCharacter::LossHealth, 4.0f, true);
 }
 
-void APlayerCharacter::Pause()
-{
-	OnGamePlayStateChange.Broadcast(EGamePlayState::Paused);
-}
-
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
