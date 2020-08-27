@@ -71,6 +71,9 @@ APlayerCharacter::APlayerCharacter()
 	FlashLightComp->InnerConeAngle = 16.0f;
 	FlashLightComp->OuterConeAngle = 32.0f;
 
+	/* Actor Damage Binding */
+	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
+
 	/* Posses by Player */
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	AutoPossessAI = EAutoPossessAI::Disabled;
@@ -84,9 +87,6 @@ void APlayerCharacter::BeginPlay()
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
-
-	/* Set Timer for Automatic Health Loss */
-	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &APlayerCharacter::LossHealth, 4.0f, true);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
@@ -108,18 +108,15 @@ void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComp
 		Cast<IInteractable>(OtherActor)->Interact();
 }
 
-bool APlayerCharacter::UpdateHealth(float DeltaHealth)
+void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
+	float Damage, const UDamageType *DamageType, AController *InstigatedBy, AActor *DamageCauser)
 {
-	float NewHealth = Health + DeltaHealth;
-
+	float NewHealth = Health + Damage;
 	if (NewHealth > 0.0f) {
 		if (NewHealth > 1.0f)
 			NewHealth = 1.0f;
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
-		return true;
 	} else if (NewHealth <= 0.0f) {
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);
 	}
-
-	return false;
 }

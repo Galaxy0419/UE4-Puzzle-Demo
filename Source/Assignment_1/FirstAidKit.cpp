@@ -29,6 +29,8 @@ AFirstAidKit::AFirstAidKit()
 
 void AFirstAidKit::Interact()
 {
-	if (Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->UpdateHealth(RECOVER_HEALTH))
+	if (Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Health < 1.0f) {
+		UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
 		Destroy();
+	}
 } 

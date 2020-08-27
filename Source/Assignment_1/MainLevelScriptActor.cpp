@@ -1,7 +1,5 @@
 #include "MainLevelScriptActor.h"
 
-#include "Kismet/GameplayStatics.h"
-
 AMainLevelScriptActor::AMainLevelScriptActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -13,6 +11,9 @@ void AMainLevelScriptActor::BeginPlay()
 
 	/* Bind Events */
 	MainCharacter->OnGamePlayStateChange.AddUObject(this, &AMainLevelScriptActor::UpdateGamePlayState);
+
+	/* Set Timer for Automatic Health Loss */
+	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &AMainLevelScriptActor::LossHealth, 4.0f, true);
 
 	/* Create Widgets */
 	UClass *MenuWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Menu.WBP_Menu_C'"));

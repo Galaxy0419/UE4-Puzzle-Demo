@@ -13,8 +13,6 @@
 
 #include "PlayerCharacter.generated.h"
 
-#define FOG_DAMAGE	-0.0625f
-
 enum class EGamePlayState : uint8 {
 	Playing,
 	Paused,
@@ -30,9 +28,6 @@ class ASSIGNMENT_1_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 private:
-	float Health;
-	FTimerHandle HealthLossTimerHandle;
-
 	UCameraComponent *TPCameraComp;
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
@@ -45,9 +40,10 @@ private:
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); };
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
-	FORCEINLINE void LossHealth() { UpdateHealth(FOG_DAMAGE); };
-
 public:
+	float Health;
+	FOnGamePlayStateChange OnGamePlayStateChange;
+
 	APlayerCharacter();
 	void BeginPlay() override;
 
@@ -55,7 +51,7 @@ public:
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
 		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
-	FOnGamePlayStateChange OnGamePlayStateChange;
-
-	bool UpdateHealth(float DeltaHealth);
+	UFUNCTION()
+	void OnCharacterTakeDamage(AActor *DamagedActor, float Damage,
+		const UDamageType *DamageType, AController *InstigatedBy, AActor *DamageCauser);
 };
