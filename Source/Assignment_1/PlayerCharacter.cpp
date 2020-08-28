@@ -106,6 +106,9 @@ void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComp
 {
 	if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		Cast<IInteractable>(OtherActor)->Interact();
+	
+	if (OtherComp->ComponentHasTag("Exit"))
+		OnGamePlayStateChange.Broadcast(EGamePlayState::Won);
 }
 
 void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,

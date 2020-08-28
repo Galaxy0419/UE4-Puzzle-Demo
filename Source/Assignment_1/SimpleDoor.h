@@ -20,7 +20,7 @@ private:
 public:
 	ASimpleDoor();
 	void BeginPlay() override;
-	void Tick(float DeltaSecond) override;
+	void Tick(float DeltaTime) override;
 
 	FORCEINLINE void Open() { SetActorTickEnabled(true); };
 };

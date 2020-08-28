@@ -30,11 +30,11 @@ void ASimpleDoor::BeginPlay()
 	StopY = CurrentLocation.Y - 150.0f;
 }
 
-void ASimpleDoor::Tick(float DeltaSecond)
+void ASimpleDoor::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaSecond);
+	Super::Tick(DeltaTime);
 
-	if ((CurrentLocation.Y -= DeltaSecond * DOOR_SPEED) > StopY)
+	if ((CurrentLocation.Y -= DeltaTime * DOOR_SPEED) > StopY)
 		SetActorLocation(CurrentLocation);
 	else
 		Destroy();
