@@ -57,6 +57,7 @@ AFuseBox::AFuseBox()
 
 void AFuseBox::OnFuseBoxBeginOverlap(AActor *OverlappedActor, AActor *OtherActor)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "Exit Door is Opened");
 	FuseMeshComp->SetVisibility(true);
 	FuseBoxLightMeshComp->SetMaterial(0, OnMaterial);
 	ExitDoor->SetActorTickEnabled(true);

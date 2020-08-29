@@ -25,6 +25,7 @@ void ASimpleKey::OnKeyBeginOverlap(UPrimitiveComponent *OverlappedComponent, AAc
 
 void ASimpleKey::Interact()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "A Door is Opened");
 	SimpleDoorToUnlock->Open();
 	Destroy();
 }

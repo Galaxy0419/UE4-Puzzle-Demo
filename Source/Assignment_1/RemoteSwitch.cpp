@@ -30,6 +30,7 @@ void ARemoteSwitch::OnSwitchBeginOverlap(UPrimitiveComponent *OverlappedComponen
 {
 	if (!bOpened) {
 		bOpened = true;
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "A Remote Door is Opened");
 		SwitchMeshComp->SetMaterial(0, OnMaterial);
 		OnSwitchToggle.Broadcast();
 	}
