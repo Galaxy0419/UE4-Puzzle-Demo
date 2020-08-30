@@ -1,5 +1,7 @@
 #include "FuseBox.h"
 
+#include "ItemUserWidget.h"
+
 AFuseBox::AFuseBox()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -51,11 +53,29 @@ AFuseBox::AFuseBox()
 	FuseBoxLightMeshComp->SetRelativeScale3D(FVector(0.0625f, 0.25f, 0.25f));
 	FuseBoxLightMeshComp->SetMaterial(0, FuseBoxLightOffMaterialAsset.Object);
 
-	/* On Actor Overlap */
-	OnActorBeginOverlap.AddDynamic(this, &AFuseBox::OnFuseBoxBeginOverlap);
+	/* Wiget Component */
+	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Fuse Box Widget"));
+	ItemWidgetComp->SetupAttachment(RootComponent);
+
+	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
-void AFuseBox::OnFuseBoxBeginOverlap(AActor *OverlappedActor, AActor *OtherActor)
+void AFuseBox::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/* Create Widget */
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Item_Description.WBP_Item_Description_C'"));
+	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
+
+	ItemWidget->TitleText->SetText(FText::FromString("Fuse Box"));
+	ItemWidget->DescriptionText->SetText(FText::FromString("\nA Broken Fuse Box to Unlock the Exit Door.  A Fuze is Required to Open it.\n\nPress \"E\" to Place the Fuse"));
+
+	ItemWidgetComp->SetWidget(ItemWidget);
+}
+
+void AFuseBox::Interact()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "Exit Door is Opened");
 	FuseMeshComp->SetVisibility(true);

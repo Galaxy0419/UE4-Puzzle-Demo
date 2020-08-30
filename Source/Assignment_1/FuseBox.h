@@ -4,12 +4,13 @@
 #include "GameFramework/Actor.h"
 #include "Materials/Material.h"
 
+#include "Interactable.h"
 #include "ExitDoor.h"
 
 #include "FuseBox.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API AFuseBox : public AActor
+class ASSIGNMENT_1_API AFuseBox : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 
@@ -25,9 +26,9 @@ private:
 	UStaticMeshComponent *FuseMeshComp;
 	UStaticMeshComponent *FuseBoxLightMeshComp;
 
-	UFUNCTION()
-	void OnFuseBoxBeginOverlap(AActor *OverlappedActor, AActor *OtherActor);
-
 public:
 	AFuseBox();
+	void BeginPlay() override;
+
+	void Interact() override;
 };

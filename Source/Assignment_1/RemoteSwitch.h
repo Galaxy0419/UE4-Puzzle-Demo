@@ -4,12 +4,14 @@
 #include "GameFramework/Actor.h"
 #include "Materials/Material.h"
 
+#include "Interactable.h"
+
 #include "RemoteSwitch.generated.h"
 
 DECLARE_EVENT(ARemoteSwitch, FOnSwitchToggle);
 
 UCLASS()
-class ASSIGNMENT_1_API ARemoteSwitch : public AActor
+class ASSIGNMENT_1_API ARemoteSwitch : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	
@@ -20,12 +22,11 @@ private:
 	UMaterial *OffMaterial;
 	UStaticMeshComponent *SwitchMeshComp;
 
-	UFUNCTION()
-	void OnSwitchBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
-
 public:
 	ARemoteSwitch();
+	void BeginPlay() override;
 
 	FOnSwitchToggle OnSwitchToggle;
+
+	void Interact() override;
 };

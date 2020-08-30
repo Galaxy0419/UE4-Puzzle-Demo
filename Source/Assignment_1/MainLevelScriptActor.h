@@ -26,9 +26,6 @@ private:
 	UPROPERTY()
 	UGameOverUserWidget *GameOverWBP;
 
-	UPROPERTY(EditAnywhere)
-	APlayerCharacter *MainCharacter;
-
 	FTimerHandle HealthLossTimerHandle;
 	FORCEINLINE void LossHealth() { MainCharacter->TakeDamage(FOG_DAMAGE, FDamageEvent(), nullptr, this); };
 
@@ -37,4 +34,7 @@ private:
 public:
 	AMainLevelScriptActor();
 	void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere)
+	APlayerCharacter *MainCharacter;
 };

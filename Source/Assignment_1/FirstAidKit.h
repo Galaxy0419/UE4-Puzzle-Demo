@@ -17,5 +17,7 @@ private:
 
 public:
 	AFirstAidKit();
+	void BeginPlay() override;
+
 	void Interact() override;
 };

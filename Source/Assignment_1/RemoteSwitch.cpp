@@ -2,13 +2,20 @@
 
 #include "UObject/ConstructorHelpers.h"
 
+#include "ItemUserWidget.h"
+
 ARemoteSwitch::ARemoteSwitch()
 	: bOpened(false)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	/* Scene Root Component */
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Root Component"));
+	RootComponent->Mobility = EComponentMobility::Static;
+
+	/* Switch Mesh Component */
 	SwitchMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Switch Root Mesh Component"));
-	RootComponent = SwitchMeshComp;
+	SwitchMeshComp->SetupAttachment(RootComponent);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SwitchMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	SwitchMeshComp->SetStaticMesh(SwitchMeshAsset.Object);
@@ -19,14 +26,35 @@ ARemoteSwitch::ARemoteSwitch()
 	static ConstructorHelpers::FObjectFinder<UMaterial> SwitchOffMaterialAsset(TEXT("Material'/Game/Materials/M_Switch_Off.M_Switch_Off'"));
 	OffMaterial = SwitchOffMaterialAsset.Object;
 
-	SwitchMeshComp->OnComponentBeginOverlap.AddDynamic(this, &ARemoteSwitch::OnSwitchBeginOverlap);
+	SwitchMeshComp->Mobility = EComponentMobility::Static;
 	SwitchMeshComp->SetRelativeScale3D(FVector(0.125f, 0.5f, 0.5f));
 	SwitchMeshComp->SetMaterial(0, SwitchOffMaterialAsset.Object);
 	SwitchMeshComp->SetCollisionProfileName("Trigger");
+
+	/* Wiget Component */
+	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Remote Switch Widget"));
+	ItemWidgetComp->SetupAttachment(RootComponent);
+
+	ItemWidgetComp->Mobility = EComponentMobility::Static;
+	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
-void ARemoteSwitch::OnSwitchBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-	UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void ARemoteSwitch::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/* Create Widget */
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_Item_Description.WBP_Item_Description_C'"));
+	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
+
+	ItemWidget->TitleText->SetText(FText::FromString("Remote Switch"));
+	ItemWidget->DescriptionText->SetText(FText::FromString("\nA Switch to Unlock a Specific Door in the Level.\n\nPress \"E\" to Interact"));
+
+	ItemWidgetComp->SetWidget(ItemWidget);
+}
+
+void ARemoteSwitch::Interact()
 {
 	if (!bOpened) {
 		bOpened = true;
