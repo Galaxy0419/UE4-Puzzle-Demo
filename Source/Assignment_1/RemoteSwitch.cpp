@@ -28,8 +28,8 @@ ARemoteSwitch::ARemoteSwitch()
 
 	SwitchMeshComp->Mobility = EComponentMobility::Static;
 	SwitchMeshComp->SetRelativeScale3D(FVector(0.125f, 0.5f, 0.5f));
+	SwitchMeshComp->SetGenerateOverlapEvents(false);
 	SwitchMeshComp->SetMaterial(0, SwitchOffMaterialAsset.Object);
-	SwitchMeshComp->SetCollisionProfileName("Trigger");
 
 	/* Wiget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Remote Switch Widget"));
@@ -37,6 +37,8 @@ ARemoteSwitch::ARemoteSwitch()
 
 	ItemWidgetComp->Mobility = EComponentMobility::Static;
 	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+	ItemWidgetComp->SetGenerateOverlapEvents(false);
+	ItemWidgetComp->SetVisibility(false);
 	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 

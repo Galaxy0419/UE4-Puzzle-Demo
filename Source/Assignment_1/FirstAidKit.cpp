@@ -30,15 +30,16 @@ AFirstAidKit::AFirstAidKit()
 
 	FirstAidKitMeshComp->Mobility = EComponentMobility::Static;
 	FirstAidKitMeshComp->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.25f));
-	FirstAidKitMeshComp->SetGenerateOverlapEvents(true);
-	FirstAidKitMeshComp->SetCollisionProfileName("Trigger");
+	FirstAidKitMeshComp->SetGenerateOverlapEvents(false);
 
 	/* Wiget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("First Aid Kit Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
 	ItemWidgetComp->Mobility = EComponentMobility::Static;
+	ItemWidgetComp->SetGenerateOverlapEvents(false);
 	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+	ItemWidgetComp->SetVisibility(false);
 	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
@@ -51,7 +52,7 @@ void AFirstAidKit::BeginPlay()
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("First Aid Kit"));
-	ItemWidget->DescriptionText->SetText(FText::FromString("\nA First Aid Kit to Restore Small Amount of Health.\n\nPress \"E\" to Use"));
+	ItemWidget->DescriptionText->SetText(FText::FromString("A First Aid Kit to Restore Small Amount of Health.\n\nNote: You can only use it when you are hurt.\n\nPress \"E\" to Use"));
 
 	ItemWidgetComp->SetWidget(ItemWidget);
 }

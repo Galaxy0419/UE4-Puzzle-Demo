@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "TimerManager.h"
 
+#include "Interactable.h"
 #include "HUDUserWidget.h"
 
 #include "PlayerCharacter.generated.h"
@@ -32,12 +33,18 @@ private:
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
 
+	FHitResult LineTaceHitRes;
+	FTransform TraceTranform;
+	FVector TraceStart, TraceEnd;
+	IInteractable *InteractableItem;
+
 	UPROPERTY()
 	UHUDUserWidget *HUDWBP;
 
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); };
+	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(); };
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 public:
@@ -46,6 +53,7 @@ public:
 
 	APlayerCharacter();
 	void BeginPlay() override;
+	void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,

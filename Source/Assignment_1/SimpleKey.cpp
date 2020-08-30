@@ -21,15 +21,17 @@ ASimpleKey::ASimpleKey()
 	SimpleKeyMeshComp->SetStaticMesh(SimpleKeyMeshAsset.Object);
 
 	SimpleKeyMeshComp->Mobility = EComponentMobility::Static;
+	SimpleKeyMeshComp->SetGenerateOverlapEvents(false);
 	SimpleKeyMeshComp->SetRelativeScale3D(FVector(0.25f));
-	SimpleKeyMeshComp->SetCollisionProfileName("Trigger");
 
 	/* Wiget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Simple Key Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
 	ItemWidgetComp->Mobility = EComponentMobility::Static;
+	ItemWidgetComp->SetGenerateOverlapEvents(false);
 	ItemWidgetComp->SetRelativeLocation(FVector(-32.0f, 32.0f, 64.0f));
+	ItemWidgetComp->SetVisibility(false);
 	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 

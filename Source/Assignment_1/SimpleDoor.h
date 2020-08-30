@@ -11,7 +11,6 @@ class ASSIGNMENT_1_API ASimpleDoor : public AActor
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent *SimpleDoorMeshComp;
 
 	float StopY;

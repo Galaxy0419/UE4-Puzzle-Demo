@@ -22,7 +22,7 @@ AFuseBox::AFuseBox()
 
 	FuseBoxMeshComp->Mobility = EComponentMobility::Static;
 	FuseBoxMeshComp->SetRelativeScale3D(FVector(0.125f, 1.0f, 1.0f));
-	FuseBoxMeshComp->SetCollisionProfileName("Trigger");
+	FuseBoxMeshComp->SetGenerateOverlapEvents(false);
 	
 	/* Fuse */
 	FuseMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fuse Mesh Component"));
@@ -35,6 +35,7 @@ AFuseBox::AFuseBox()
 	FuseMeshComp->SetMaterial(0, FuseBoxMaterialAsset.Object);
 	FuseMeshComp->SetRelativeLocation(FVector(-16.0f, 20.0f, 0.0f));
 	FuseMeshComp->SetRelativeScale3D(FVector(0.25f, 0.25f, 0.8f));
+	FuseMeshComp->SetGenerateOverlapEvents(false);
 	FuseMeshComp->SetVisibility(false);
 
 	/* Fuse Box Light */
@@ -51,6 +52,7 @@ AFuseBox::AFuseBox()
 	FuseBoxLightMeshComp->SetStaticMesh(FuseBoxMeshAsset.Object);
 	FuseBoxLightMeshComp->SetRelativeLocation(FVector(-10.0f, -30.0f, 0.0f));
 	FuseBoxLightMeshComp->SetRelativeScale3D(FVector(0.0625f, 0.25f, 0.25f));
+	FuseBoxLightMeshComp->SetGenerateOverlapEvents(false);
 	FuseBoxLightMeshComp->SetMaterial(0, FuseBoxLightOffMaterialAsset.Object);
 
 	/* Wiget Component */
@@ -58,6 +60,8 @@ AFuseBox::AFuseBox()
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
 	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+	ItemWidgetComp->SetGenerateOverlapEvents(false);
+	ItemWidgetComp->SetVisibility(false);
 	ItemWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
@@ -70,7 +74,7 @@ void AFuseBox::BeginPlay()
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Fuse Box"));
-	ItemWidget->DescriptionText->SetText(FText::FromString("\nA Broken Fuse Box to Unlock the Exit Door.  A Fuze is Required to Open it.\n\nPress \"E\" to Place the Fuse"));
+	ItemWidget->DescriptionText->SetText(FText::FromString("A Broken Fuse Box to Unlock the Exit Door.\n\nNote: A Fuze is Required to Open it.\n\nPress \"E\" to Place the Fuse"));
 
 	ItemWidgetComp->SetWidget(ItemWidget);
 }

@@ -8,10 +8,12 @@
 
 #include "Interactable.h"
 
+static const FVector AimOffset(0.0f, 64.0f, 90.0f);
+
 APlayerCharacter::APlayerCharacter()
-	: Health(1.0f)
+	: InteractableItem(nullptr), Health(1.0f)
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	/* Capsule Component */
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
@@ -34,9 +36,9 @@ APlayerCharacter::APlayerCharacter()
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm Component"));
 	SpringArmComp->SetupAttachment(RootComponent);
 
+	SpringArmComp->SocketOffset = AimOffset;
 	SpringArmComp->TargetArmLength = 256.0f;
 	SpringArmComp->bUsePawnControlRotation = true;
-	SpringArmComp->SetRelativeLocation(FVector(0.0f, 0.0f, 90.0f));
 
 	/* Camera Component */
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
@@ -89,6 +91,24 @@ void APlayerCharacter::BeginPlay()
 	HUDWBP->AddToViewport(0);
 }
 
+void APlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	TraceTranform = TPCameraComp->GetComponentToWorld();
+	TraceStart = TraceTranform.GetLocation();
+	TraceEnd = TraceStart + TraceTranform.GetRotation().GetForwardVector() * 512.0f;
+
+	if (GetWorld()->LineTraceSingleByChannel(LineTaceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)
+			&& LineTaceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
+		InteractableItem = Cast<IInteractable>(LineTaceHitRes.Actor);
+		InteractableItem->ItemWidgetComp->SetVisibility(true);
+	} else if (InteractableItem != nullptr) {
+		InteractableItem->ItemWidgetComp->SetVisibility(false);
+		InteractableItem = nullptr;
+	}
+}
+
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -99,14 +119,12 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
 }
 
 void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
-		Cast<IInteractable>(OtherActor)->Interact();
-	
 	if (OtherComp->ComponentHasTag("Exit"))
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Won);
 }
