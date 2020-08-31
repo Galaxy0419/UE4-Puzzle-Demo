@@ -43,11 +43,11 @@ void AMainLevelScriptActor::UpdateGamePlayState(EGamePlayState State)
 			PauseWBP->AddToViewport(1);
 			break;
 		case EGamePlayState::Dead:
-			GameOverWBP->WinLostText->SetText(FText::FromString("You lost and died in the fog!"));
+			GameOverWBP->WinLostText->SetText(FText::FromString("\nYou lost and died in the fog!"));
 			GameOverWBP->AddToViewport(1);
 			break;
 		case EGamePlayState::Won:
-			GameOverWBP->WinLostText->SetText(FText::FromString("Congratulations! You escaped from the poison fog!"));
+			GameOverWBP->WinLostText->SetText(FText::FromString("               Congratulations!\n\nYou escaped from the poison fog!"));
 			GameOverWBP->AddToViewport(1);
 			break;
 		default:
