@@ -17,7 +17,7 @@ AFuseBox::AFuseBox()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> FuseBoxMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	FuseBoxMeshComp->SetStaticMesh(FuseBoxMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FuseBoxMaterialAsset(TEXT("Material'/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> FuseBoxMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_White.M_Flat_White'"));
 	FuseBoxMeshComp->SetMaterial(0, FuseBoxMaterialAsset.Object);
 
 	FuseBoxMeshComp->Mobility = EComponentMobility::Static;

@@ -19,7 +19,7 @@ AExitDoor::AExitDoor()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> DoorMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	ExitDoorMeshComp->SetStaticMesh(DoorMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> DoorMaterialAsset(TEXT("Material'/Engine/EditorMeshes/ColorCalibrator/M_GreyBall.M_GreyBall'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> DoorMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Blue.M_Flat_Blue'"));
 	ExitDoorMeshComp->SetMaterial(0, DoorMaterialAsset.Object);
 
 	ExitDoorMeshComp->SetRelativeScale3D(FVector(0.25f, 8.1f, 4.0f));
