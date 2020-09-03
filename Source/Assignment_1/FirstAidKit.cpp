@@ -4,9 +4,8 @@
 #include "Materials/Material.h"
 #include "UObject/ConstructorHelpers.h"
 
-#include "PlayerCharacter.h"
-
 #include "ItemUserWidget.h"
+#include "PlayerCharacter.h"
 
 #define RECOVER_HEALTH	0.25f
 

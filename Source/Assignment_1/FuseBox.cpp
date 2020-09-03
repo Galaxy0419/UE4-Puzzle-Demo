@@ -1,6 +1,9 @@
 #include "FuseBox.h"
 
+#include "Kismet/GameplayStatics.h"
+
 #include "ItemUserWidget.h"
+#include "PlayerCharacter.h"
 
 AFuseBox::AFuseBox()
 {
@@ -81,8 +84,13 @@ void AFuseBox::BeginPlay()
 
 void AFuseBox::Interact()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "Exit Door is Opened");
-	FuseMeshComp->SetVisibility(true);
-	FuseBoxLightMeshComp->SetMaterial(0, OnMaterial);
-	ExitDoor->SetActorTickEnabled(true);
+	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (PlayerCharacter->FuseNumber > 0) {
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "Exit Door is Opened");
+		FuseMeshComp->SetVisibility(true);
+		FuseBoxLightMeshComp->SetMaterial(0, OnMaterial);
+		ExitDoor->SetActorTickEnabled(true);
+	} else {
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, "A Fuse is Required to Open this Door");
+	}
 }

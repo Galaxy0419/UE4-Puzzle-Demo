@@ -53,7 +53,7 @@ void ASimpleKey::BeginPlay()
 
 void ASimpleKey::Interact()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "A Door is Opened");
+	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "A Door is Opened");
 	SimpleDoorToUnlock->Open();
 	
 	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
