@@ -1,9 +1,11 @@
 #include "SimpleKey.h"
 
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "UObject/ConstructorHelpers.h"
 
 #include "ItemUserWidget.h"
+#include "PlayerCharacter.h"
 
 ASimpleKey::ASimpleKey()
 {
@@ -53,5 +55,9 @@ void ASimpleKey::Interact()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, "A Door is Opened");
 	SimpleDoorToUnlock->Open();
+	
+	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	PlayerCharacter->HUDWBP->KeyNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->KeyNumber += 1)));
+
 	Destroy();
 }

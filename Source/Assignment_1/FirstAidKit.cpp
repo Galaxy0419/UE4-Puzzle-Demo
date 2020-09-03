@@ -61,6 +61,10 @@ void AFirstAidKit::Interact()
 {
 	if (Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Health < 1.0f) {
 		UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
+
+		APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		PlayerCharacter->HUDWBP->FirstAidKitNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->FirstAidKitNumber += 1)));
+
 		Destroy();
 	}
 } 

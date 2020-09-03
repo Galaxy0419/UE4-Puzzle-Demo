@@ -11,7 +11,7 @@
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
 
 APlayerCharacter::APlayerCharacter()
-	: InteractableItem(nullptr), Health(1.0f)
+	: InteractableItem(nullptr), Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0)
 {
 	PrimaryActorTick.bCanEverTick = true;
 

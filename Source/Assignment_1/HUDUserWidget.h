@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Blueprint/UserWidget.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
+#include "Blueprint/UserWidget.h"
 
 #include "HUDUserWidget.generated.h"
 
@@ -13,4 +14,13 @@ class ASSIGNMENT_1_API UHUDUserWidget : public UUserWidget
 public:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar *HealthProgressBar;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock *FirstAidKitNumberText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock *KeyNumberText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock *FuseNumberText;
 };

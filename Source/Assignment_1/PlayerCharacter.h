@@ -38,9 +38,6 @@ private:
 	FVector TraceStart, TraceEnd;
 	IInteractable *InteractableItem;
 
-	UPROPERTY()
-	UHUDUserWidget *HUDWBP;
-
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); };
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); };
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); };
@@ -49,7 +46,13 @@ private:
 
 public:
 	float Health;
+	uint8 FirstAidKitNumber;
+	uint8 KeyNumber;
+	uint8 FuseNumber;
 	FOnGamePlayStateChange OnGamePlayStateChange;
+
+	UPROPERTY()
+	UHUDUserWidget *HUDWBP;
 
 	APlayerCharacter();
 	void BeginPlay() override;
