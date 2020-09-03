@@ -1,8 +1,5 @@
 #include "SimpleDoor.h"
 
-#include "Materials/Material.h"
-#include "UObject/ConstructorHelpers.h"
-
 #define DOOR_SPEED	64.0f
 
 ASimpleDoor::ASimpleDoor()

@@ -2,7 +2,6 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "UObject/ConstructorHelpers.h"
 
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"

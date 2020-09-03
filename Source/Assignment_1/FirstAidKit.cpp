@@ -1,8 +1,6 @@
 #include "FirstAidKit.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "Materials/Material.h"
-#include "UObject/ConstructorHelpers.h"
 
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"

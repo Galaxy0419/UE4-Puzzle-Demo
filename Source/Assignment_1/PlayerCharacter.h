@@ -34,7 +34,7 @@ private:
 	USpringArmComponent *SpringArmComp;
 
 	FHitResult LineTaceHitRes;
-	FTransform TraceTranform;
+	FTransform TPCamTranform;
 	FVector TraceStart, TraceEnd;
 	IInteractable *InteractableItem;
 
@@ -45,6 +45,10 @@ private:
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 public:
+	APlayerCharacter();
+	void BeginPlay() override;
+	void Tick(float DeltaTime) override;
+
 	float Health;
 	uint8 FirstAidKitNumber;
 	uint8 KeyNumber;
@@ -53,10 +57,6 @@ public:
 
 	UPROPERTY()
 	UHUDUserWidget *HUDWBP;
-
-	APlayerCharacter();
-	void BeginPlay() override;
-	void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,

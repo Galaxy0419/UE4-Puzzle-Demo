@@ -1,7 +1,5 @@
 #include "RemoteSwitch.h"
 
-#include "UObject/ConstructorHelpers.h"
-
 #include "ItemUserWidget.h"
 
 ARemoteSwitch::ARemoteSwitch()

@@ -3,8 +3,6 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Materials/Material.h"
-#include "UObject/ConstructorHelpers.h"
 
 #include "Interactable.h"
 
@@ -95,9 +93,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	TraceTranform = TPCameraComp->GetComponentToWorld();
-	TraceStart = TraceTranform.GetLocation();
-	TraceEnd = TraceStart + TraceTranform.GetRotation().GetForwardVector() * 512.0f;
+	TPCamTranform = TPCameraComp->GetComponentToWorld();
+	TraceStart = TPCamTranform.GetLocation();
+	TraceEnd = TraceStart + TPCamTranform.GetRotation().GetForwardVector() * 512.0f;
 
 	if (GetWorld()->LineTraceSingleByChannel(LineTaceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)
 			&& LineTaceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
