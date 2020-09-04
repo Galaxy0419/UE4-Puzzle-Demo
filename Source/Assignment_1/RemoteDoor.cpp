@@ -4,10 +4,5 @@ void ARemoteDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SwitchToListen->OnSwitchToggle.AddUObject(this, &ARemoteDoor::OnSwitchToggle);
-}
-
-void ARemoteDoor::OnSwitchToggle()
-{
-	Open();
+	SwitchToListen->OnSwitchToggle.AddUObject(this, &ASimpleDoor::Open);
 }

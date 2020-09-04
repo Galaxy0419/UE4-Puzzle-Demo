@@ -44,6 +44,14 @@ private:
 	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(); };
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
+	UFUNCTION()
+	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
+		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnCharacterTakeDamage(AActor *DamagedActor, float Damage,
+		const UDamageType *DamageType, AController *InstigatedBy, AActor *DamageCauser);
+
 public:
 	APlayerCharacter();
 	void BeginPlay() override;
@@ -57,12 +65,4 @@ public:
 
 	UPROPERTY()
 	UHUDUserWidget *HUDWBP;
-
-	UFUNCTION()
-	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
-
-	UFUNCTION()
-	void OnCharacterTakeDamage(AActor *DamagedActor, float Damage,
-		const UDamageType *DamageType, AController *InstigatedBy, AActor *DamageCauser);
 };

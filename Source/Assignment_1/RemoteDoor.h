@@ -15,6 +15,4 @@ private:
 
 public:
 	void BeginPlay() override;
-
-	void OnSwitchToggle();
 };
