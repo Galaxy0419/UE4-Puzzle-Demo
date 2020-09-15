@@ -10,7 +10,7 @@ AExitDoor::AExitDoor()
 	ExitBoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Exit Root Box Compoent"));
 	RootComponent = ExitBoxComp;
 
-	ExitBoxComp->SetBoxExtent(FVector(8.0f, 400.0f, 200.0f), false);
+	ExitBoxComp->SetBoxExtent(FVector(32.0f, 800.0f, 275.0f), false);
 	ExitBoxComp->ComponentTags.Add("Exit");
 
 	ExitDoorMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Exit Door Mesh Component"));
@@ -22,7 +22,7 @@ AExitDoor::AExitDoor()
 	static ConstructorHelpers::FObjectFinder<UMaterial> DoorMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Blue.M_Flat_Blue'"));
 	ExitDoorMeshComp->SetMaterial(0, DoorMaterialAsset.Object);
 
-	ExitDoorMeshComp->SetRelativeScale3D(FVector(0.25f, 8.1f, 4.0f));
+	ExitDoorMeshComp->SetRelativeScale3D(FVector(1.0f, 16.0f, 5.5f));
 }
 
 void AExitDoor::BeginPlay()
@@ -30,7 +30,7 @@ void AExitDoor::BeginPlay()
 	Super::BeginPlay();
 	
 	CurrentLocation = ExitDoorMeshComp->GetRelativeLocation();
-	StopZ = CurrentLocation.Z + 400.0f;
+	StopZ = CurrentLocation.Z + 500.0f;
 }
 
 void AExitDoor::Tick(float DeltaTime)

@@ -97,13 +97,14 @@ void APlayerCharacter::Tick(float DeltaTime)
 	TraceStart = TPCamTranform.GetLocation();
 	TraceEnd = TraceStart + TPCamTranform.GetRotation().GetForwardVector() * 512.0f;
 
-	if (GetWorld()->LineTraceSingleByChannel(LineTaceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)
-			&& LineTaceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
-		InteractableItem = Cast<IInteractable>(LineTaceHitRes.Actor);
-		InteractableItem->ItemWidgetComp->SetVisibility(true);
-	} else if (InteractableItem != nullptr) {
-		InteractableItem->ItemWidgetComp->SetVisibility(false);
-		InteractableItem = nullptr;
+	if (GetWorld()->LineTraceSingleByChannel(LineTaceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)) {
+		if (LineTaceHitRes.Actor.IsValid() && LineTaceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
+			InteractableItem = Cast<IInteractable>(LineTaceHitRes.Actor);
+			InteractableItem->ItemWidgetComp->SetVisibility(true);
+		} else if (InteractableItem != nullptr) {
+			InteractableItem->ItemWidgetComp->SetVisibility(false);
+			InteractableItem = nullptr;
+		}
 	}
 }
 

@@ -16,7 +16,7 @@ ASimpleDoor::ASimpleDoor()
 	static ConstructorHelpers::FObjectFinder<UMaterial> DoorMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Blue.M_Flat_Blue'"));
 	SimpleDoorMeshComp->SetMaterial(0, DoorMaterialAsset.Object);
 
-	SimpleDoorMeshComp->SetRelativeScale3D(FVector(0.25f, 1.5f, 2.1f));
+	SimpleDoorMeshComp->SetRelativeScale3D(FVector(1.0f, 2.0f, 3.0f));
 }
 
 void ASimpleDoor::BeginPlay()
@@ -24,7 +24,7 @@ void ASimpleDoor::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentLocation = GetActorLocation();
-	StopY = CurrentLocation.Y - 150.0f;
+	StopY = CurrentLocation.Y - 200.0f;
 }
 
 void ASimpleDoor::Tick(float DeltaTime)
