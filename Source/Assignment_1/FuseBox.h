@@ -5,7 +5,7 @@
 #include "Materials/Material.h"
 
 #include "Interactable.h"
-#include "ExitDoor.h"
+#include "ExitDoorSwitch.h"
 
 #include "FuseBox.generated.h"
 
@@ -18,7 +18,7 @@ private:
 	bool bOpened;
 	
 	UPROPERTY(EditAnywhere)
-	AExitDoor *ExitDoor;
+	AExitDoorSwitch *ExitDoorSwitch;
 
 	UMaterial *OnMaterial;
 	UMaterial *OffMaterial;

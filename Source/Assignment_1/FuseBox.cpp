@@ -85,12 +85,13 @@ void AFuseBox::BeginPlay()
 void AFuseBox::Interact()
 {
 	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 	if (PlayerCharacter->FuseNumber > 0) {
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "Exit Door is Opened");
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "Door Switch is Activated");
 		FuseMeshComp->SetVisibility(true);
 		FuseBoxLightMeshComp->SetMaterial(0, OnMaterial);
-		ExitDoor->SetActorTickEnabled(true);
+		ExitDoorSwitch->bFuseFound = true;
 	} else {
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, "A Fuse is Required to Open this Door");
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, "A Fuse is Required to Activate Door Switch");
 	}
 }
