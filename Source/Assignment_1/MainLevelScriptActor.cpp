@@ -1,6 +1,7 @@
 #include "MainLevelScriptActor.h"
 
 AMainLevelScriptActor::AMainLevelScriptActor()
+	: bBinaryDoorOpened(false)
 {
 	PrimaryActorTick.bCanEverTick = false;
 }
@@ -32,6 +33,27 @@ void AMainLevelScriptActor::BeginPlay()
 
 	/* Pause The Game First */
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+void AMainLevelScriptActor::UpdateBinaryLight(uint8 Mask)
+{
+	if (!bBinaryDoorOpened) {
+		bool bAllOn = true;
+
+		for (uint8 i = 0; i < 3; i++) {
+			if (Mask & (1 << i)) {
+				if (!(BinaryLights[i]->ToggleLight()))
+					bAllOn = false;
+			} else if (!(BinaryLights[i]->bLightOn)) {
+				bAllOn = false;
+			}
+		}
+
+		if (bAllOn) {
+			bBinaryDoorOpened = true;
+			BinarySimpleDoor->Open();
+		}
+	}
 }
 
 void AMainLevelScriptActor::UpdateGamePlayState(EGamePlayState State)

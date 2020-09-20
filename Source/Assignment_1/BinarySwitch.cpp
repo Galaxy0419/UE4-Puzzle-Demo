@@ -1,9 +1,11 @@
 #include "BinarySwitch.h"
 
+#include "Kismet/GameplayStatics.h"
+
 #include "ItemUserWidget.h"
+#include "MainLevelScriptActor.h"
 
 ABinarySwitch::ABinarySwitch()
-	: bOpend(false)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -48,21 +50,5 @@ void ABinarySwitch::BeginPlay()
 
 void ABinarySwitch::Interact()
 {
-	if (!bOpend) {
-		bool bAllOn = true;
-
-		for (uint8 i = 0; i < static_cast<uint8>(ELightMask::LightMax); i++) {
-			if (LightMasks & (1 << i)) {
-				if (!(BinaryLights[i]->ToggleLight()))
-					bAllOn = false;
-			} else if (!(BinaryLights[i]->bLightOn)) {
-				bAllOn = false;
-			}
-		}
-
-		if (bAllOn) {
-			DoorToOpen->Open();
-			bOpend = true;
-		}
-	}
+	Cast<AMainLevelScriptActor>(GetWorld()->GetLevelScriptActor())->UpdateBinaryLight(LightMasks);
 }

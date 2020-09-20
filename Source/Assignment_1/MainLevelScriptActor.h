@@ -4,6 +4,8 @@
 #include "Engine/LevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "BinaryLight.h"
+#include "SimpleDoor.h"
 #include "GameOverUserWidget.h"
 #include "PlayerCharacter.h"
 
@@ -26,6 +28,14 @@ private:
 	UPROPERTY()
 	UGameOverUserWidget *GameOverWBP;
 
+	bool bBinaryDoorOpened;
+
+	UPROPERTY(EditAnywhere)
+	ASimpleDoor *BinarySimpleDoor;
+
+	UPROPERTY(EditAnywhere)
+	TArray<ABinaryLight *> BinaryLights;
+
 	FTimerHandle HealthLossTimerHandle;
 	FORCEINLINE void LossHealth() { MainCharacter->TakeDamage(FOG_DAMAGE, FDamageEvent(), nullptr, this); };
 
@@ -37,4 +47,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	APlayerCharacter *MainCharacter;
+
+	void UpdateBinaryLight(uint8 Mask);
 };
