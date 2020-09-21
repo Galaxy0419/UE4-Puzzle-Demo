@@ -80,7 +80,7 @@ void AExitDoorSwitch::Interact()
 		if (bFuseFound) {
 			bDoorOpened = true;
 			SetActorTickEnabled(true);
-			ExitDoor->SetActorTickEnabled(true);
+			ExitDoor->Open();
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "The Exit Door is Opened");
 		} else {
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, "Find and Place the Fuse in the Fuse Box to Activate the Switch");

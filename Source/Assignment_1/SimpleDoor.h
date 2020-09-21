@@ -2,6 +2,7 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 #include "SimpleDoor.generated.h"
 
@@ -12,6 +13,7 @@ class ASSIGNMENT_1_API ASimpleDoor : public AActor
 	
 private:
 	UStaticMeshComponent *SimpleDoorMeshComp;
+	UMaterialInstanceDynamic *DoorDynamicMaterial;
 
 	float StopY;
 	FVector CurrentLocation;
@@ -21,5 +23,5 @@ public:
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
-	FORCEINLINE void Open() { SetActorTickEnabled(true); };
+	void Open();
 };

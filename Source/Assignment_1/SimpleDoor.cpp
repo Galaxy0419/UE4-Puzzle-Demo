@@ -1,5 +1,7 @@
 #include "SimpleDoor.h"
 
+#include "Kismet/KismetMaterialLibrary.h"
+
 #define DOOR_SPEED	64.0f
 
 ASimpleDoor::ASimpleDoor()
@@ -13,15 +15,16 @@ ASimpleDoor::ASimpleDoor()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> DoorMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	SimpleDoorMeshComp->SetStaticMesh(DoorMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> DoorMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Blue.M_Flat_Blue'"));
-	SimpleDoorMeshComp->SetMaterial(0, DoorMaterialAsset.Object);
-
 	SimpleDoorMeshComp->SetRelativeScale3D(FVector(1.0f, 2.0f, 3.0f));
 }
 
 void ASimpleDoor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UMaterial *DoorMaterial = LoadObject<UMaterial>(nullptr, TEXT("Material'/Game/Materials/M_Door.M_Door'"));
+	DoorDynamicMaterial = UKismetMaterialLibrary::CreateDynamicMaterialInstance(GetWorld(), DoorMaterial);
+	SimpleDoorMeshComp->SetMaterial(0, DoorDynamicMaterial);
 
 	CurrentLocation = GetActorLocation();
 	StopY = CurrentLocation.Y - 200.0f;
@@ -36,3 +39,9 @@ void ASimpleDoor::Tick(float DeltaTime)
 	else
 		Destroy();
 }
+
+void ASimpleDoor::Open()
+{
+	DoorDynamicMaterial->SetScalarParameterValue("Switch", 1.0f);
+	SetActorTickEnabled(true);
+};

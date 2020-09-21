@@ -16,7 +16,7 @@ ABinarySwitch::ABinarySwitch()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SwitchMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	SwitchMeshComp->SetStaticMesh(SwitchMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> SwitchMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Blue.M_Flat_Blue'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> SwitchMaterialAsset(TEXT("Material'/Game/Materials/M_Door.M_Door'"));
 	SwitchMeshComp->SetMaterial(0, SwitchMaterialAsset.Object);
 
 	SwitchMeshComp->Mobility = EComponentMobility::Static;

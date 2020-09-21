@@ -1,6 +1,7 @@
 #include "FirstAidKit.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "Materials/MaterialInstanceConstant.h"
 
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"
@@ -22,7 +23,8 @@ AFirstAidKit::AFirstAidKit()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> FirstAidKidMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	FirstAidKitMeshComp->SetStaticMesh(FirstAidKidMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FirstAidKidMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Green.M_Flat_Green'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>
+		FirstAidKidMaterialAsset(TEXT("MaterialInstanceConstant'/Game/Materials/MI_Flat_First_Aid_Kit_Inter.MI_Flat_First_Aid_Kit_Inter'"));
 	FirstAidKitMeshComp->SetMaterial(0, FirstAidKidMaterialAsset.Object);
 
 	FirstAidKitMeshComp->Mobility = EComponentMobility::Static;
@@ -49,7 +51,8 @@ void AFirstAidKit::BeginPlay()
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("First Aid Kit"));
-	ItemWidget->DescriptionText->SetText(FText::FromString("A First Aid Kit to Restore Small Amount of Health.\n\nNote: You can only use it when you are hurt.\n\nPress \"E\" to Use"));
+	ItemWidget->DescriptionText->SetText(FText::FromString(
+		"A First Aid Kit to Restore Small Amount of Health.\n\nNote: You can only use it when you are hurt.\n\nPress \"E\" to Use"));
 
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
