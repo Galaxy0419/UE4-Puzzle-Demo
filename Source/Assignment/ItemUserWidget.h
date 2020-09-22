@@ -6,7 +6,7 @@
 #include "ItemUserWidget.generated.h"
 
 UCLASS(meta = (DisableNativeTick))
-class ASSIGNMENT_1_API UItemUserWidget : public UUserWidget
+class ASSIGNMENT_API UItemUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	

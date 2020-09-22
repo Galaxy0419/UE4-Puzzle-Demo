@@ -6,7 +6,7 @@
 #include "GameOverUserWidget.generated.h"
 
 UCLASS(meta = (DisableNativeTick))
-class ASSIGNMENT_1_API UGameOverUserWidget : public UUserWidget
+class ASSIGNMENT_API UGameOverUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	

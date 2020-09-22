@@ -9,7 +9,7 @@
 #include "SimpleKey.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API ASimpleKey : public AActor, public IInteractable
+class ASSIGNMENT_API ASimpleKey : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

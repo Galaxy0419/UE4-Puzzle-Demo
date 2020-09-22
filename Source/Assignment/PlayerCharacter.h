@@ -24,7 +24,7 @@ enum class EGamePlayState : uint8 {
 DECLARE_EVENT_OneParam(APlayerCharacter, FOnGamePlayStateChange, EGamePlayState);
 
 UCLASS()
-class ASSIGNMENT_1_API APlayerCharacter : public ACharacter
+class ASSIGNMENT_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 

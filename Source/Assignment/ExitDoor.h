@@ -1,25 +1,27 @@
 #pragma once
 
+#include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
-#include "SimpleDoor.generated.h"
+#include "ExitDoor.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API ASimpleDoor : public AActor
+class ASSIGNMENT_API AExitDoor : public AActor
 {
 	GENERATED_BODY()
 	
 private:
-	UStaticMeshComponent *SimpleDoorMeshComp;
+	UBoxComponent *ExitBoxComp;
+	UStaticMeshComponent *ExitDoorMeshComp;
 	UMaterialInstanceDynamic *DoorDynamicMaterial;
 
-	float StopY;
+	float StopZ;
 	FVector CurrentLocation;
 
-public:
-	ASimpleDoor();
+public:	
+	AExitDoor();
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 

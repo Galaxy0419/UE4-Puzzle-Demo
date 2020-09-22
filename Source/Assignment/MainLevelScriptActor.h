@@ -14,7 +14,7 @@
 #define FOG_DAMAGE	-0.0625f
 
 UCLASS()
-class ASSIGNMENT_1_API AMainLevelScriptActor : public ALevelScriptActor
+class ASSIGNMENT_API AMainLevelScriptActor : public ALevelScriptActor
 {
 	GENERATED_BODY()
 	

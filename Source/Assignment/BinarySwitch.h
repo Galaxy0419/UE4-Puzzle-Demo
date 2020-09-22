@@ -19,7 +19,7 @@ enum class ELightMask : uint8
 ENUM_CLASS_FLAGS(ELightMask)
 
 UCLASS()
-class ASSIGNMENT_1_API ABinarySwitch : public AActor, public IInteractable
+class ASSIGNMENT_API ABinarySwitch : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 

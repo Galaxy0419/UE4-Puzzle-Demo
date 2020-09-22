@@ -9,7 +9,7 @@
 #include "ExitDoorSwitch.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API AExitDoorSwitch : public AActor, public IInteractable
+class ASSIGNMENT_API AExitDoorSwitch : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

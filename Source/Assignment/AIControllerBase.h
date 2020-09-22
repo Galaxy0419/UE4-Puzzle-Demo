@@ -8,7 +8,7 @@
 #include "AIControllerBase.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API AAIControllerBase : public AAIController
+class ASSIGNMENT_API AAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
 	

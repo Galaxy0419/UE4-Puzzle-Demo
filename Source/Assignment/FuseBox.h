@@ -10,7 +10,7 @@
 #include "FuseBox.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API AFuseBox : public AActor, public IInteractable
+class ASSIGNMENT_API AFuseBox : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 

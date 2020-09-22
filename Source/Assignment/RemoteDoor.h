@@ -5,7 +5,7 @@
 #include "RemoteDoor.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API ARemoteDoor : public ASimpleDoor
+class ASSIGNMENT_API ARemoteDoor : public ASimpleDoor
 {
 	GENERATED_BODY()
 	

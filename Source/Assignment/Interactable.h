@@ -11,7 +11,7 @@ class UInteractable : public UInterface
 	GENERATED_BODY()
 };
 
-class ASSIGNMENT_1_API IInteractable
+class ASSIGNMENT_API IInteractable
 {
 	GENERATED_BODY()
 	

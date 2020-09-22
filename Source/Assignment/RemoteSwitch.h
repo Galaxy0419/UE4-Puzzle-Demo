@@ -11,7 +11,7 @@
 DECLARE_EVENT(ARemoteSwitch, FOnSwitchToggle);
 
 UCLASS()
-class ASSIGNMENT_1_API ARemoteSwitch : public AActor, public IInteractable
+class ASSIGNMENT_API ARemoteSwitch : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

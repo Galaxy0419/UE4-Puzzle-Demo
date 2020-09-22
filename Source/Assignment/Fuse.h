@@ -5,18 +5,18 @@
 
 #include "Interactable.h"
 
-#include "FirstAidKit.generated.h"
+#include "Fuse.generated.h"
 
 UCLASS()
-class ASSIGNMENT_1_API AFirstAidKit : public AActor, public IInteractable
+class ASSIGNMENT_API AFuse : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	
 private:
-	UStaticMeshComponent *FirstAidKitMeshComp;
+	UStaticMeshComponent *FuseMeshComp;
 
 public:
-	AFirstAidKit();
+	AFuse();
 	void BeginPlay() override;
 
 	void Interact() override;
