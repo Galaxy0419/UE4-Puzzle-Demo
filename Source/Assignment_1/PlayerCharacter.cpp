@@ -30,6 +30,9 @@ APlayerCharacter::APlayerCharacter()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnumBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
 	GetMesh()->SetAnimInstanceClass(AnumBPClass.Class);
 
+	/* Movement */
+	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+
 	/* Spring Arm Component */
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm Component"));
 	SpringArmComp->SetupAttachment(RootComponent);
