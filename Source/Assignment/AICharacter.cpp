@@ -3,6 +3,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include "PlayerCharacter.h"
+
 AAICharacter::AAICharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -11,6 +13,7 @@ AAICharacter::AAICharacter()
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(false);
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AAICharacter::OnCapsuleHit);
 
 	/* Set Skeletal Mesh */
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
@@ -28,7 +31,7 @@ AAICharacter::AAICharacter()
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 5.0f, 0.0f);
-	GetCharacterMovement()->MaxWalkSpeed = 350.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 
 	/* AI Controller */
 	AutoReceiveInput = EAutoReceiveInput::Disabled;
@@ -51,4 +54,11 @@ void AAICharacter::BeginPlay()
 	ControllerInstance->Possess(this);
 
 	ControllerInstance->MoveToLocation(GetActorLocation());
+}
+
+void AAICharacter::OnCapsuleHit(UPrimitiveComponent *HitComponent,
+	AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	if (Cast<APlayerCharacter>(OtherActor))
+		OtherActor->TakeDamage(-0.01f, FDamageEvent(), nullptr, this);
 }
