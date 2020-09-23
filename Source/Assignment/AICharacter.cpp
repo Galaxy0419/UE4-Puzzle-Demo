@@ -5,7 +5,7 @@
 
 AAICharacter::AAICharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	/* Capsule Component */
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
@@ -27,7 +27,6 @@ AAICharacter::AAICharacter()
 	bUseControllerRotationPitch = true;
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = true;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 5.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 450.0f;
 

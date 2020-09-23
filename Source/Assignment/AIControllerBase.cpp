@@ -36,13 +36,8 @@ void AAIControllerBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (TargetPlayer) {
-		NewRotation = UKismetMathLibrary::FindLookAtRotation(
-			GetPawn()->GetActorLocation(), TargetPlayer->GetActorLocation());
-		SetControlRotation(NewRotation);
-		GetPawn()->SetActorRotation(NewRotation);
+	if (TargetPlayer)
 		MoveToLocation(TargetPlayer->GetActorLocation());
-	}
 }
 
 void AAIControllerBase::OnPlayerInSight(AActor *Player, FAIStimulus Stimulus)

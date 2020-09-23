@@ -17,7 +17,6 @@ private:
 	UAISenseConfig_Sight *AISightConfig;
 
 	APawn *TargetPlayer;
-	FRotator NewRotation;
 
 	UFUNCTION()
 	void OnPlayerInSight(AActor *Player, FAIStimulus Stimulus);
