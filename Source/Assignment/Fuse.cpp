@@ -16,7 +16,7 @@ AFuse::AFuse()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> FuseMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
 	FuseMeshComp->SetStaticMesh(FuseMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FuseMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_White.M_Flat_White'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> FuseMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_Fuse_Inter.M_Flat_Fuse_Inter'"));
 	FuseMeshComp->SetMaterial(0, FuseMaterialAsset.Object);
 
 	FuseMeshComp->Mobility = EComponentMobility::Static;
