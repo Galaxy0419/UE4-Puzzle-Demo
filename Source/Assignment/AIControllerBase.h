@@ -13,13 +13,13 @@ class ASSIGNMENT_API AAIControllerBase : public AAIController
 	GENERATED_BODY()
 	
 private:
-	UNavigationSystemV1 *NavigationSystem;
 	UAISenseConfig_Sight *AISightConfig;
 
 	UFUNCTION()
 	void OnPlayerInSight(AActor *Player, FAIStimulus Stimulus);
 
 protected:
+	UNavigationSystemV1 *NavigationSystem;
 	APawn *TargetPlayer;
 
 public:
