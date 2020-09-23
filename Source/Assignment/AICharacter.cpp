@@ -28,7 +28,7 @@ AAICharacter::AAICharacter()
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 5.0f, 0.0f);
-	GetCharacterMovement()->MaxWalkSpeed = 450.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 350.0f;
 
 	/* AI Controller */
 	AutoReceiveInput = EAutoReceiveInput::Disabled;
