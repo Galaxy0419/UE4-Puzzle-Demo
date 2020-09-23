@@ -32,22 +32,17 @@ void AAIControllerBase::BeginPlay()
 	NavigationSystem = Cast<UNavigationSystemV1>(GetWorld()->GetNavigationSystem());
 }
 
-void AAIControllerBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if (TargetPlayer)
-		MoveToLocation(TargetPlayer->GetActorLocation());
-}
-
 void AAIControllerBase::OnPlayerInSight(AActor *Player, FAIStimulus Stimulus)
 {
 	APawn *PlayerPawn = Cast<APawn>(Player);
 	
 	if (PlayerPawn && PlayerPawn->IsPlayerControlled()) {
-		if (Stimulus.WasSuccessfullySensed())
+		if (Stimulus.WasSuccessfullySensed()) {
 			TargetPlayer = PlayerPawn;
-		else
+			MoveToActor(TargetPlayer);
+		} else {
 			TargetPlayer = nullptr;
+			StopMovement();
+		}
 	}
 }

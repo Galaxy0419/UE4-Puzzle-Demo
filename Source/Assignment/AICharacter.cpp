@@ -49,4 +49,6 @@ void AAICharacter::BeginPlay()
 	AAIController* ControllerInstance = GetWorld()->SpawnActor<AAIController>(
 		AIControllerClassOverride, GetActorLocation(), GetActorRotation(), SpawnInfo);
 	ControllerInstance->Possess(this);
+
+	ControllerInstance->MoveToLocation(GetActorLocation());
 }

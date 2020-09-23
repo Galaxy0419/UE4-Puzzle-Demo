@@ -16,13 +16,13 @@ private:
 	UNavigationSystemV1 *NavigationSystem;
 	UAISenseConfig_Sight *AISightConfig;
 
-	APawn *TargetPlayer;
-
 	UFUNCTION()
 	void OnPlayerInSight(AActor *Player, FAIStimulus Stimulus);
+
+protected:
+	APawn *TargetPlayer;
 
 public:
 	AAIControllerBase();
 	void BeginPlay() override;
-	void Tick(float DeltaTime) override;
 };
