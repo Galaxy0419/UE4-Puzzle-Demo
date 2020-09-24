@@ -2,6 +2,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Materials/MaterialInstanceConstant.h"
 
 #include "PlayerCharacter.h"
 
@@ -20,6 +21,16 @@ AAICharacter::AAICharacter()
 	GetMesh()->SetSkeletalMesh(CharacterSKMeshAsset.Object);
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -94.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+
+	/* Set Material */
+	static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>
+		EnemyBodyAsset(TEXT("MaterialInstanceConstant'/Game/Mannequin/Character/Materials/MI_Enemy_Body.MI_Enemy_Body'"));
+	GetMesh()->SetMaterial(0, EnemyBodyAsset.Object);
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>
+		EnemyLogoAsset(TEXT("MaterialInstanceConstant'/Game/Mannequin/Character/Materials/MI_Enemy_Logo.MI_Enemy_Logo'"));
+	GetMesh()->SetMaterial(1, EnemyLogoAsset.Object);
+	
 
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
