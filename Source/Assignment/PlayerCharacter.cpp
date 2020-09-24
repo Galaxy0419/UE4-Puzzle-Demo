@@ -87,7 +87,7 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create HUD Widget */
-	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UI/WBP_HUD.WBP_HUD_C'"));
+	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
 }
