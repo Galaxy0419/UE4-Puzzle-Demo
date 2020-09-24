@@ -5,7 +5,7 @@
 #include "LevelAIController.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API ALevelAIController : public AAIControllerBase
+class ASSIGNMENT_API ALevelAIController final : public AAIControllerBase
 {
 	GENERATED_BODY()
 	

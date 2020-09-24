@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "Interactable.h"
@@ -10,7 +9,7 @@
 DECLARE_EVENT(ARemoteSwitch, FOnSwitchToggle);
 
 UCLASS()
-class ASSIGNMENT_API ARemoteSwitch : public AActor, public IInteractable
+class ASSIGNMENT_API ARemoteSwitch final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

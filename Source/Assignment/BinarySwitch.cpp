@@ -23,7 +23,7 @@ ABinarySwitch::ABinarySwitch()
 	SwitchMeshComp->SetRelativeScale3D(FVector(0.125f, 0.5f, 0.5f));
 	SwitchMeshComp->SetGenerateOverlapEvents(false);
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Binary Switch Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -39,7 +39,8 @@ void ABinarySwitch::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr,TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Binary Switch"));

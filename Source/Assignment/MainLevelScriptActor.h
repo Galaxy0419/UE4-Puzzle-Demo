@@ -14,7 +14,7 @@
 #define FOG_DAMAGE	-0.0625f
 
 UCLASS()
-class ASSIGNMENT_API AMainLevelScriptActor : public ALevelScriptActor
+class ASSIGNMENT_API AMainLevelScriptActor final : public ALevelScriptActor
 {
 	GENERATED_BODY()
 	
@@ -39,7 +39,7 @@ private:
 	FTimerHandle HealthLossTimerHandle;
 	FORCEINLINE void LossHealth() { MainCharacter->TakeDamage(FOG_DAMAGE, FDamageEvent(), nullptr, this); };
 
-	void UpdateGamePlayState(EGamePlayState State);
+	void UpdateGamePlayState(EGamePlayState State) const;
 
 public:
 	AMainLevelScriptActor();

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "Interactable.h"
@@ -9,7 +8,7 @@
 #include "SimpleKey.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API ASimpleKey : public AActor, public IInteractable
+class ASSIGNMENT_API ASimpleKey final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

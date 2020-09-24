@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "Interactable.h"
@@ -9,7 +8,7 @@
 #include "FuseBox.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API AFuseBox : public AActor, public IInteractable
+class ASSIGNMENT_API AFuseBox final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 

@@ -1,6 +1,6 @@
 #include "AIControllerBase.h"
 
-#include "Kismet/KismetMathLibrary.h"
+#include "Perception/AIPerceptionComponent.h"
 
 AAIControllerBase::AAIControllerBase()
 	: TargetPlayer(nullptr)
@@ -9,7 +9,7 @@ AAIControllerBase::AAIControllerBase()
 
 	/* Perception */
 	SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-	AISightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AI Sight Configuration"));
+	UAISenseConfig_Sight *AISightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AI Sight Configuration"));
 
 	AISightConfig->SightRadius = 512.0f;
 	AISightConfig->LoseSightRadius = 512.0f;
@@ -20,9 +20,9 @@ AAIControllerBase::AAIControllerBase()
 	AISightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	AISightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 
-	GetPerceptionComponent()->SetDominantSense(AISightConfig->GetSenseImplementation());
-	GetPerceptionComponent()->ConfigureSense(*AISightConfig);
-	GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AAIControllerBase::OnPlayerInSight);
+	AAIController::GetPerceptionComponent()->SetDominantSense(AISightConfig->GetSenseImplementation());
+	AAIController::GetPerceptionComponent()->ConfigureSense(*AISightConfig);
+	AAIController::GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AAIControllerBase::OnPlayerInSight);
 }
 
 void AAIControllerBase::BeginPlay()

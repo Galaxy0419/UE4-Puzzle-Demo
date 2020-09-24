@@ -29,7 +29,7 @@ ARemoteSwitch::ARemoteSwitch()
 	SwitchMeshComp->SetGenerateOverlapEvents(false);
 	SwitchMeshComp->SetMaterial(0, SwitchOffMaterialAsset.Object);
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Remote Switch Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -45,7 +45,8 @@ void ARemoteSwitch::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Remote Switch"));

@@ -1,14 +1,12 @@
 #pragma once
 
 #include "Components/BoxComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
-#include "Materials/MaterialInstanceDynamic.h"
 
 #include "ExitDoor.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API AExitDoor : public AActor
+class ASSIGNMENT_API AExitDoor final : public AActor
 {
 	GENERATED_BODY()
 	

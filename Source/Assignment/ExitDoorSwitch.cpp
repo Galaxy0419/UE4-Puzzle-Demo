@@ -26,7 +26,7 @@ AExitDoorSwitch::AExitDoorSwitch()
 	SwitchBaseMeshComp->SetRelativeScale3D(FVector(0.125f, 1.0f, 1.0f));
 	SwitchBaseMeshComp->SetGenerateOverlapEvents(false);
 
-	/* Siwtch Handle */
+	/* Switch Handle */
 	SwitchMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Switch Handle Mesh Component"));
 	SwitchMeshComp->SetupAttachment(RootComponent);
 
@@ -38,7 +38,7 @@ AExitDoorSwitch::AExitDoorSwitch()
 	SwitchMeshComp->SetRelativeRotation(SwitchCurrentRotation);
 	SwitchMeshComp->SetGenerateOverlapEvents(false);
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Exit Door Switch Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -53,11 +53,13 @@ void AExitDoorSwitch::BeginPlay()
 	Super::BeginPlay();
 	
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Exit Door Switch"));
-	ItemWidget->DescriptionText->SetText(FText::FromString("A Switch to Open the Exit Door.\n\nNote: A Fuze is Required to Open it.\n\nPress \"E\" to Open the Door"));
+	ItemWidget->DescriptionText->SetText(FText::FromString(
+		"A Switch to Open the Exit Door.\n\nNote: A Fuze is Required to Open it.\n\nPress \"E\" to Open the Door"));
 
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
@@ -83,7 +85,8 @@ void AExitDoorSwitch::Interact()
 			ExitDoor->Open();
 			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "The Exit Door is Opened");
 		} else {
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red, "Find and Place the Fuse in the Fuse Box to Activate the Switch");
+			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Red,
+				"Find and Place the Fuse in the Fuse Box to Activate the Switch");
 		}
 	} 
 }

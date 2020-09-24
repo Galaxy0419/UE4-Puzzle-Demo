@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
-#include "Materials/MaterialInstanceDynamic.h"
 
 #include "SimpleDoor.generated.h"
 

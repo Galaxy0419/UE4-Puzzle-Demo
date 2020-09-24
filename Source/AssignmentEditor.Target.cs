@@ -1,5 +1,4 @@
 using UnrealBuildTool;
-using System.Collections.Generic;
 
 public class AssignmentEditorTarget : TargetRules
 {
@@ -7,6 +6,6 @@ public class AssignmentEditorTarget : TargetRules
     {
         Type = TargetType.Editor;
         DefaultBuildSettings = BuildSettingsVersion.V2;
-        ExtraModuleNames.AddRange(new string[] { "Assignment" });
+        ExtraModuleNames.AddRange(new[] { "Assignment" });
     }
 }

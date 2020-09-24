@@ -13,10 +13,10 @@ ALaserCutter::ALaserCutter()
 	LaserMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Laser Root Mesh Component"));
 	RootComponent = LaserMeshComp;
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> LaserMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> LaserMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
 	LaserMeshComp->SetStaticMesh(LaserMeshAsset.Object);
 
-	ConstructorHelpers::FObjectFinder<UMaterial> LaserMaterialAsset(TEXT("Material'/Game/Materials/M_Laser.M_Laser'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> LaserMaterialAsset(TEXT("Material'/Game/Materials/M_Laser.M_Laser'"));
 	LaserMeshComp->SetMaterial(0, LaserMaterialAsset.Object);
 
 	LaserMeshComp->SetRelativeScale3D(FVector(0.125f, 0.125f, 4.0f));

@@ -17,7 +17,8 @@ AAICharacter::AAICharacter()
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AAICharacter::OnCapsuleHit);
 
 	/* Set Skeletal Mesh */
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
+		CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
 	GetMesh()->SetSkeletalMesh(CharacterSKMeshAsset.Object);
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -94.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
@@ -34,8 +35,9 @@ AAICharacter::AAICharacter()
 
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnumBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
-	GetMesh()->SetAnimInstanceClass(AnumBPClass.Class);
+	static ConstructorHelpers::FClassFinder<UAnimInstance>
+		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
+	GetMesh()->SetAnimInstanceClass(AnimBPClass.Class);
 
 	/* AI Movement */
 	bUseControllerRotationPitch = true;

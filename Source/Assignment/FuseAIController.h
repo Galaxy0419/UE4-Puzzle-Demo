@@ -5,13 +5,13 @@
 #include "FuseAIController.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API AFuseAIController : public AAIControllerBase
+class ASSIGNMENT_API AFuseAIController final : public AAIControllerBase
 {
 	GENERATED_BODY()
 	
 private:
-	uint8 ProtalIndex;
-	TArray<FVector> ProtalPoints;
+	uint8 PatrolIndex;
+	TArray<FVector> PatrolPoints;
 
 public:
 	AFuseAIController();

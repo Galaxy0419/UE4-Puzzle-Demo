@@ -58,7 +58,7 @@ AFuseBox::AFuseBox()
 	FuseBoxLightMeshComp->SetGenerateOverlapEvents(false);
 	FuseBoxLightMeshComp->SetMaterial(0, FuseBoxLightOffMaterialAsset.Object);
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Fuse Box Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -73,11 +73,13 @@ void AFuseBox::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Fuse Box"));
-	ItemWidget->DescriptionText->SetText(FText::FromString("A Broken Fuse Box to Unlock the Exit Door.\n\nNote: A Fuze is Required to Open it.\n\nPress \"E\" to Place the Fuse"));
+	ItemWidget->DescriptionText->SetText(FText::FromString(
+		"A Broken Fuse Box to Unlock the Exit Door.\n\nNote: A Fuze is Required to Open it.\n\nPress \"E\" to Place the Fuse"));
 
 	ItemWidgetComp->SetWidget(ItemWidget);
 }

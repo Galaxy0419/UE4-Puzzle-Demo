@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "LaserCutter.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API ALaserCutter : public AActor
+class ASSIGNMENT_API ALaserCutter final : public AActor
 {
 	GENERATED_BODY()
 

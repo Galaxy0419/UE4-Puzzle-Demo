@@ -17,14 +17,17 @@ void AMainLevelScriptActor::BeginPlay()
 	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &AMainLevelScriptActor::LossHealth, 4.0f, true);
 
 	/* Create Widgets */
-	UClass *MenuWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Menu.WBP_Menu_C'"));
+	UClass *MenuWBPClass = StaticLoadClass(UUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Menu.WBP_Menu_C'"));
 	MenuWBP = CreateWidget<UUserWidget>(GetWorld(), MenuWBPClass);
 	MenuWBP->AddToViewport(1);
 
-	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Pause.WBP_Pause_C'"));
+	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Pause.WBP_Pause_C'"));
 	PauseWBP = CreateWidget<UUserWidget>(GetWorld(), PauseWBPClass);
 
-	UClass *GameOverWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Game_Over.WBP_Game_Over_C'"));
+	UClass *GameOverWBPClass = StaticLoadClass(UUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Game_Over.WBP_Game_Over_C'"));
 	GameOverWBP = CreateWidget<UGameOverUserWidget>(GetWorld(), GameOverWBPClass);
 
 	/* Show Mouse Cursor */
@@ -56,7 +59,7 @@ void AMainLevelScriptActor::UpdateBinaryLight(uint8 Mask)
 	}
 }
 
-void AMainLevelScriptActor::UpdateGamePlayState(EGamePlayState State)
+void AMainLevelScriptActor::UpdateGamePlayState(EGamePlayState State) const
 {
 	switch (State) {
 		case EGamePlayState::Playing:

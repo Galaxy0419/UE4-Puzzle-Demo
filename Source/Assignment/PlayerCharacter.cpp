@@ -20,15 +20,17 @@ APlayerCharacter::APlayerCharacter()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnCapsuleBeginOverlap);
 
 	/* Set Skeletal Mesh */
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
+		CharacterSKMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
 	GetMesh()->SetSkeletalMesh(CharacterSKMeshAsset.Object);
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -94.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnumBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
-	GetMesh()->SetAnimInstanceClass(AnumBPClass.Class);
+	static ConstructorHelpers::FClassFinder<UAnimInstance>
+		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
+	GetMesh()->SetAnimInstanceClass(AnimBPClass.Class);
 
 	/* Movement */
 	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
@@ -96,13 +98,13 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	TPCamTranform = TPCameraComp->GetComponentToWorld();
-	TraceStart = TPCamTranform.GetLocation();
-	TraceEnd = TraceStart + TPCamTranform.GetRotation().GetForwardVector() * 512.0f;
+	TPCamTransform = TPCameraComp->GetComponentToWorld();
+	TraceStart = TPCamTransform.GetLocation();
+	TraceEnd = TraceStart + TPCamTransform.GetRotation().GetForwardVector() * 512.0f;
 
-	if (GetWorld()->LineTraceSingleByChannel(LineTaceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)) {
-		if (LineTaceHitRes.Actor.IsValid() && LineTaceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
-			InteractableItem = Cast<IInteractable>(LineTaceHitRes.Actor);
+	if (GetWorld()->LineTraceSingleByChannel(LineTraceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)) {
+		if (LineTraceHitRes.Actor.IsValid() && LineTraceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
+			InteractableItem = Cast<IInteractable>(LineTraceHitRes.Actor);
 			InteractableItem->ItemWidgetComp->SetVisibility(true);
 		} else if (InteractableItem != nullptr) {
 			InteractableItem->ItemWidgetComp->SetVisibility(false);

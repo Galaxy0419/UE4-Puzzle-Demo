@@ -2,12 +2,9 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Components/SpotLightComponent.h"
-#include "Components/InputComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "TimerManager.h"
 
 #include "Interactable.h"
 #include "HUDUserWidget.h"
@@ -24,7 +21,7 @@ enum class EGamePlayState : uint8 {
 DECLARE_EVENT_OneParam(APlayerCharacter, FOnGamePlayStateChange, EGamePlayState);
 
 UCLASS()
-class ASSIGNMENT_API APlayerCharacter : public ACharacter
+class ASSIGNMENT_API APlayerCharacter final : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -33,8 +30,8 @@ private:
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
 
-	FHitResult LineTaceHitRes;
-	FTransform TPCamTranform;
+	FHitResult LineTraceHitRes;
+	FTransform TPCamTransform;
 	FVector TraceStart, TraceEnd;
 	IInteractable *InteractableItem;
 

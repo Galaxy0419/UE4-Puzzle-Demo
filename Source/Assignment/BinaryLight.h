@@ -6,7 +6,7 @@
 #include "BinaryLight.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API ABinaryLight : public AActor
+class ASSIGNMENT_API ABinaryLight final : public AActor
 {
 	GENERATED_BODY()
 

@@ -1,7 +1,6 @@
 #include "SimpleKey.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"
@@ -25,7 +24,7 @@ ASimpleKey::ASimpleKey()
 	SimpleKeyMeshComp->SetGenerateOverlapEvents(false);
 	SimpleKeyMeshComp->SetRelativeScale3D(FVector(0.25f));
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Simple Key Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -41,7 +40,8 @@ void ASimpleKey::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("Simple Key"));

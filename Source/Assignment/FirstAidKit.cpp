@@ -31,7 +31,7 @@ AFirstAidKit::AFirstAidKit()
 	FirstAidKitMeshComp->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.25f));
 	FirstAidKitMeshComp->SetGenerateOverlapEvents(false);
 
-	/* Wiget Component */
+	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("First Aid Kit Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
@@ -47,7 +47,8 @@ void AFirstAidKit::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create Widget */
-	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
+	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
+		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));
 	UItemUserWidget *ItemWidget = CreateWidget<UItemUserWidget>(GetWorld(), ItemWidgetClass);
 
 	ItemWidget->TitleText->SetText(FText::FromString("First Aid Kit"));
@@ -60,7 +61,8 @@ void AFirstAidKit::BeginPlay()
 void AFirstAidKit::Interact()
 {
 	if (Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Health < 1.0f) {
-		UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
+		UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)
+			->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
 
 		APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		PlayerCharacter->HUDWBP->FirstAidKitNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->FirstAidKitNumber += 1)));

@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
-#include "BinaryLight.h"
-#include "SimpleDoor.h"
 #include "Interactable.h"
 
 #include "BinarySwitch.generated.h"
@@ -19,7 +16,7 @@ enum class ELightMask : uint8
 ENUM_CLASS_FLAGS(ELightMask)
 
 UCLASS()
-class ASSIGNMENT_API ABinarySwitch : public AActor, public IInteractable
+class ASSIGNMENT_API ABinarySwitch final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 

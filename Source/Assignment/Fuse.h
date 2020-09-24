@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "Interactable.h"
@@ -8,7 +7,7 @@
 #include "Fuse.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API AFuse : public AActor, public IInteractable
+class ASSIGNMENT_API AFuse final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	

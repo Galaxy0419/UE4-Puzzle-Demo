@@ -6,7 +6,7 @@
 #include "AICharacter.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API AAICharacter : public ACharacter
+class ASSIGNMENT_API AAICharacter final : public ACharacter
 {
 	GENERATED_BODY()
 
