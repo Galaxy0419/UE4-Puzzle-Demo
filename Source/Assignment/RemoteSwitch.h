@@ -2,7 +2,6 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
-#include "Materials/Material.h"
 
 #include "Interactable.h"
 

@@ -2,7 +2,6 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
-#include "Materials/Material.h"
 
 #include "BinaryLight.generated.h"
 
@@ -14,7 +13,7 @@ class ASSIGNMENT_API ABinaryLight : public AActor
 private:
 	UMaterial *OnMaterial;
 	UMaterial *OffMaterial;
-	UStaticMeshComponent *SwitchMeshComp;
+	UStaticMeshComponent *LightMeshComp;
 
 public:
 	ABinaryLight();
@@ -23,7 +22,7 @@ public:
 
 	FORCEINLINE bool ToggleLight() {
 		bLightOn = !bLightOn;
-		SwitchMeshComp->SetMaterial(0, bLightOn ? OnMaterial : OffMaterial);
+		LightMeshComp->SetMaterial(0, bLightOn ? OnMaterial : OffMaterial);
 		return bLightOn;
 	};
 };
