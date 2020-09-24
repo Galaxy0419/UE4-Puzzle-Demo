@@ -1,5 +1,5 @@
-# Resident Evil: Assignment 1
-FIT2097 Assignment 1 Project Repository
+# Resident Evil: Assignment 2
+FIT2097 Assignment 2 Project Repository
 
 ## How to Play
 - W: Move Forward
@@ -14,7 +14,7 @@ All
 
 ## Extra Features
 - Fog Effect Post Porocessing Material
-- Extra FuseBox to Unlock the Exit Door
+- Laser Cutter
 - Various Camera Effects
 
 ## Extra Notes
