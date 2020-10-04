@@ -1,10 +1,6 @@
 # Resident Evil: Assignment 1
 FIT2097 Assignment 1 Project Repository
 
-## Student Info
-**Name:** Tianchen Tang  
-**Student ID:** 29520800
-
 ## How to Play
 - W: Move Forward
 - S: Move Backward
