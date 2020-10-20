@@ -74,7 +74,14 @@ AFuseBox::AFuseBox()
 	SparkNiagComp->Mobility = EComponentMobility::Static;
 	SparkNiagComp->SetRelativeLocation(FVector(-8.0f, -32.0f, 16.0f));
 	SparkNiagComp->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
-	
+
+	/* Humming Sound */
+	HummingAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Humming Sound Audio Component"));
+	HummingAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave> HummingSoundAsset(TEXT("SoundWave'/Game/Audios/SW_Humming.SW_Humming'"));
+	HummingAudioComp->SetSound(HummingSoundAsset.Object);
+
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Fuse Box Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);

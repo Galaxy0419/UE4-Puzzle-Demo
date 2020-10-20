@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "GameFramework/Actor.h"
 #include "Niagara/Public/NiagaraComponent.h"
 
@@ -25,6 +26,7 @@ private:
 	UStaticMeshComponent *FuseMeshComp;
 	UStaticMeshComponent *FuseBoxLightMeshComp;
 	UNiagaraComponent *SparkNiagComp;
+	UAudioComponent *HummingAudioComp;
 	
 public:
 	AFuseBox();
