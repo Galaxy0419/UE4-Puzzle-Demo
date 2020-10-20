@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Niagara/Public/NiagaraComponent.h"
 
 #include "Interactable.h"
 #include "ExitDoorSwitch.h"
@@ -23,7 +24,8 @@ private:
 	UStaticMeshComponent *FuseBoxMeshComp;
 	UStaticMeshComponent *FuseMeshComp;
 	UStaticMeshComponent *FuseBoxLightMeshComp;
-
+	UNiagaraComponent *SparkNiagComp;
+	
 public:
 	AFuseBox();
 	void BeginPlay() override;

@@ -17,10 +17,12 @@ AFuseBox::AFuseBox()
 	FuseBoxMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fuse Box Mesh Component"));
 	FuseBoxMeshComp->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> FuseBoxMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>
+		FuseBoxMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	FuseBoxMeshComp->SetStaticMesh(FuseBoxMeshAsset.Object);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FuseBoxMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_White.M_Flat_White'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>
+		FuseBoxMaterialAsset(TEXT("Material'/Game/Materials/M_Flat_White.M_Flat_White'"));
 	FuseBoxMeshComp->SetMaterial(0, FuseBoxMaterialAsset.Object);
 
 	FuseBoxMeshComp->Mobility = EComponentMobility::Static;
@@ -31,7 +33,8 @@ AFuseBox::AFuseBox()
 	FuseMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fuse Mesh Component"));
 	FuseMeshComp->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> FuseMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>
+		FuseMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
 	FuseMeshComp->SetStaticMesh(FuseMeshAsset.Object);
 
 	FuseMeshComp->Mobility = EComponentMobility::Static;
@@ -45,10 +48,12 @@ AFuseBox::AFuseBox()
 	FuseBoxLightMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fuse Box Light Mesh Component"));
 	FuseBoxLightMeshComp->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FuseBoxLightOnMaterialAsset(TEXT("Material'/Game/Materials/M_Switch_On.M_Switch_On'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>
+		FuseBoxLightOnMaterialAsset(TEXT("Material'/Game/Materials/M_Switch_On.M_Switch_On'"));
 	OnMaterial = FuseBoxLightOnMaterialAsset.Object;
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FuseBoxLightOffMaterialAsset(TEXT("Material'/Game/Materials/M_Switch_Off.M_Switch_Off'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>
+		FuseBoxLightOffMaterialAsset(TEXT("Material'/Game/Materials/M_Switch_Off.M_Switch_Off'"));
 	OffMaterial = FuseBoxLightOffMaterialAsset.Object;
 
 	FuseBoxLightMeshComp->Mobility = EComponentMobility::Static;
@@ -58,6 +63,18 @@ AFuseBox::AFuseBox()
 	FuseBoxLightMeshComp->SetGenerateOverlapEvents(false);
 	FuseBoxLightMeshComp->SetMaterial(0, FuseBoxLightOffMaterialAsset.Object);
 
+	/* Spark Niagara System */
+	SparkNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spark Niagara System Component"));
+	SparkNiagComp->SetupAttachment(RootComponent);
+	
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
+		SparkNiagSysAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_Spark.NS_Spark'"));
+	SparkNiagComp->SetAsset(SparkNiagSysAsset.Object);
+	
+	SparkNiagComp->Mobility = EComponentMobility::Static;
+	SparkNiagComp->SetRelativeLocation(FVector(-8.0f, -32.0f, 16.0f));
+	SparkNiagComp->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
+	
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Fuse Box Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
