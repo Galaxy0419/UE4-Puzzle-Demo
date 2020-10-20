@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "Interactable.h"
+#include "Kismet/KismetMaterialLibrary.h"
 
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
 
@@ -83,6 +84,11 @@ void APlayerCharacter::BeginPlay()
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
 	HUDWBP->AddToViewport(0);
+
+	/* Create & Set Camera Blood Dynamic Post Process Material */
+	UMaterial *CameraBloodPPMAsset = LoadObject<UMaterial>(nullptr, TEXT("Material'/Game/Materials/PPM_Blood.PPM_Blood'"));
+	CameraBloodPPM = UKismetMaterialLibrary::CreateDynamicMaterialInstance(GetWorld(), CameraBloodPPMAsset);
+	TPCameraComp->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraBloodPPM));
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -131,6 +137,8 @@ void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
 	if (NewHealth > 0.0f) {
 		if (NewHealth > 1.0f)
 			NewHealth = 1.0f;
+		CameraBloodPPM->SetScalarParameterValue("Blood Inner Radius",
+			FMath::Lerp(0.5f, 1.0f, NewHealth));
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 	} else if (NewHealth <= 0.0f) {
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);

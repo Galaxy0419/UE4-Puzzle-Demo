@@ -30,6 +30,7 @@ private:
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
 	UStaticMeshComponent *GrenadeLauncher;
+	UMaterialInstanceDynamic *CameraBloodPPM;
 
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
