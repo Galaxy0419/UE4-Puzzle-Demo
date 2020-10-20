@@ -47,25 +47,6 @@ APlayerCharacter::APlayerCharacter()
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
 	TPCameraComp->SetupAttachment(SpringArmComp);
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> FogPPMAsset(TEXT("Material'/Game/Materials/PPM_Fog.PPM_Fog'"));
-	TPCameraComp->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, FogPPMAsset.Object));
-
-	/* Camera Auto Exposure */
-	TPCameraComp->PostProcessSettings.bOverride_AutoExposureMethod = true;
-	TPCameraComp->PostProcessSettings.AutoExposureMethod = EAutoExposureMethod::AEM_Manual;
-	TPCameraComp->PostProcessSettings.bOverride_CameraISO = true;
-	TPCameraComp->PostProcessSettings.CameraISO = 65536.0f;
-
-	/* Camera Effects */
-	TPCameraComp->PostProcessSettings.bOverride_VignetteIntensity = true;
-	TPCameraComp->PostProcessSettings.VignetteIntensity = 0.75f;
-	TPCameraComp->PostProcessSettings.bOverride_BloomIntensity = true;
-	TPCameraComp->PostProcessSettings.BloomIntensity = 0.0f;
-	TPCameraComp->PostProcessSettings.bOverride_SceneFringeIntensity = true;
-	TPCameraComp->PostProcessSettings.SceneFringeIntensity = 1.0f;
-	TPCameraComp->PostProcessSettings.bOverride_MotionBlurAmount = true;
-	TPCameraComp->PostProcessSettings.MotionBlurAmount = 0.0f;
-
 	/* Flash Light Component */
 	FlashLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flash Light Component"));
 	FlashLightComp->SetupAttachment(SpringArmComp);
