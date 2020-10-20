@@ -9,7 +9,7 @@
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
 
 APlayerCharacter::APlayerCharacter()
-	: InteractableItem(nullptr), Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0)
+	: InteractableItem(nullptr), Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), bArmed(false)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -56,6 +56,16 @@ APlayerCharacter::APlayerCharacter()
 	FlashLightComp->AttenuationRadius = 8192.0f;
 	FlashLightComp->InnerConeAngle = 16.0f;
 	FlashLightComp->OuterConeAngle = 32.0f;
+
+	/* Grenade Launcher */
+	GrenadeLauncher = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Grenade Launcher"));
+	GrenadeLauncher->AttachToComponent(GetMesh(),
+		FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), "GripPoint");
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>
+		GrenadeLauncherAsset(TEXT("StaticMesh'/Game/Mannequin/Weapon/Mesh/SM_GrenadeLauncher.SM_GrenadeLauncher'"));
+	GrenadeLauncher->SetStaticMesh(GrenadeLauncherAsset.Object);
+	GrenadeLauncher->SetVisibility(false);
 
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
