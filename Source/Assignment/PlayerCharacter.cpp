@@ -29,7 +29,7 @@ APlayerCharacter::APlayerCharacter()
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	static ConstructorHelpers::FClassFinder<UAnimInstance>
-		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
+		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ABP_Player.ABP_Player_C'"));
 	GetMesh()->SetAnimInstanceClass(AnimBPClass.Class);
 
 	/* Movement */

@@ -36,7 +36,7 @@ AAICharacter::AAICharacter()
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	static ConstructorHelpers::FClassFinder<UAnimInstance>
-		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP_C'"));
+		AnimBPClass(TEXT("AnimBlueprint'/Game/Mannequin/Animations/ABP_AI.ABP_AI_C'"));
 	GetMesh()->SetAnimInstanceClass(AnimBPClass.Class);
 
 	/* AI Movement */
