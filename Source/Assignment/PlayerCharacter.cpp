@@ -68,6 +68,15 @@ APlayerCharacter::APlayerCharacter()
 	GrenadeLauncher->SetStaticMesh(GrenadeLauncherAsset.Object);
 	GrenadeLauncher->SetVisibility(false);
 
+	/* Pant Sound Component */
+	PantAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Pant Audio Component"));
+	PantAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave> PantSoundAsset(TEXT("SoundWave'/Game/Audios/SW_Pant.SW_Pant'"));
+	PantAudioComp->SetSound(PantSoundAsset.Object);
+
+	PantAudioComp->bAutoActivate = false;
+	
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
 
@@ -137,8 +146,18 @@ void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
 	if (NewHealth > 0.0f) {
 		if (NewHealth > 1.0f)
 			NewHealth = 1.0f;
-		CameraBloodPPM->SetScalarParameterValue("Blood Inner Radius",
-			FMath::Lerp(0.5f, 1.0f, NewHealth));
+
+		/* If Player Health is Below 25, Play the Sound */
+		if (NewHealth < 0.25f)
+			PantAudioComp->Activate();
+		/* If Player Health is Above 25, Stop Playing the Sound */
+		else if (NewHealth > Health && NewHealth >= 0.25f)
+			PantAudioComp->Deactivate();
+
+		/* Update Camera Blood Post Process Material */
+		CameraBloodPPM->SetScalarParameterValue("Blood Inner Radius",FMath::Lerp(0.5f, 1.0f, NewHealth));
+
+		/* Update HUD Health Progress Bar */
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 	} else if (NewHealth <= 0.0f) {
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);

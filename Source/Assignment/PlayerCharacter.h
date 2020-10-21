@@ -2,6 +2,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
+#include "Components/AudioComponent.h"
 #include "Components/SpotLightComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -31,6 +32,7 @@ private:
 	USpringArmComponent *SpringArmComp;
 	UStaticMeshComponent *GrenadeLauncher;
 	UMaterialInstanceDynamic *CameraBloodPPM;
+	UAudioComponent *PantAudioComp;
 
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
