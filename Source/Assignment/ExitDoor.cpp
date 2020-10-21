@@ -22,6 +22,15 @@ AExitDoor::AExitDoor()
 	ExitDoorMeshComp->SetStaticMesh(DoorMeshAsset.Object);
 
 	ExitDoorMeshComp->SetRelativeScale3D(FVector(1.0f, 16.0f, 5.5f));
+
+	OpenAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Open Audio Component"));
+	OpenAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>
+        DoorOpenSoundAsset(TEXT("SoundWave'/Game/Audios/SW_ExitDoorOpening.SW_ExitDoorOpening'"));
+	OpenAudioComp->SetSound(DoorOpenSoundAsset.Object);
+
+	OpenAudioComp->bAutoActivate = false;
 }
 
 void AExitDoor::BeginPlay()
@@ -44,12 +53,14 @@ void AExitDoor::Tick(float DeltaTime)
 		ExitDoorMeshComp->SetRelativeLocation(CurrentLocation);
 	} else {
 		ExitDoorMeshComp->DestroyComponent();
+		OpenAudioComp->Stop();
 		SetActorTickEnabled(false);
 	}
 }
 
 void AExitDoor::Open()
 {
-	DoorDynamicMaterial->SetScalarParameterValue("Switch", 1.0f);
+	OpenAudioComp->Play();
 	SetActorTickEnabled(true);
+	DoorDynamicMaterial->SetScalarParameterValue("Switch", 1.0f);
 }

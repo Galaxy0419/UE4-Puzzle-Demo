@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "SimpleDoor.generated.h"
@@ -12,6 +13,7 @@ class ASSIGNMENT_API ASimpleDoor : public AActor
 private:
 	UStaticMeshComponent *SimpleDoorMeshComp;
 	UMaterialInstanceDynamic *DoorDynamicMaterial;
+	UAudioComponent *UnlockAudioComp;
 
 	float StopY;
 	FVector CurrentLocation;

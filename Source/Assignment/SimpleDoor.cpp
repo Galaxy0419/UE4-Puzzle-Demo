@@ -16,6 +16,15 @@ ASimpleDoor::ASimpleDoor()
 	SimpleDoorMeshComp->SetStaticMesh(DoorMeshAsset.Object);
 
 	SimpleDoorMeshComp->SetRelativeScale3D(FVector(1.0f, 2.0f, 3.0f));
+
+	UnlockAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Unlock Audio Component"));
+	UnlockAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>
+		DoorUnlockSoundAsset(TEXT("SoundWave'/Game/Audios/SW_DoorUnlock.SW_DoorUnlock'"));
+	UnlockAudioComp->SetSound(DoorUnlockSoundAsset.Object);
+
+	UnlockAudioComp->bAutoActivate = false;
 }
 
 void ASimpleDoor::BeginPlay()
@@ -42,6 +51,7 @@ void ASimpleDoor::Tick(float DeltaTime)
 
 void ASimpleDoor::Open()
 {
-	DoorDynamicMaterial->SetScalarParameterValue("Switch", 1.0f);
+	UnlockAudioComp->Play();
 	SetActorTickEnabled(true);
+	DoorDynamicMaterial->SetScalarParameterValue("Switch", 1.0f);
 };

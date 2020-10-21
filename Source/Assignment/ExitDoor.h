@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 
@@ -14,6 +15,7 @@ private:
 	UBoxComponent *ExitBoxComp;
 	UStaticMeshComponent *ExitDoorMeshComp;
 	UMaterialInstanceDynamic *DoorDynamicMaterial;
+	UAudioComponent *OpenAudioComp;
 
 	float StopZ;
 	FVector CurrentLocation;
