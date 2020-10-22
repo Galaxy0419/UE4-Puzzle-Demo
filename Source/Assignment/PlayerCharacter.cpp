@@ -76,6 +76,19 @@ APlayerCharacter::APlayerCharacter()
 	PantAudioComp->SetSound(PantSoundAsset.Object);
 
 	PantAudioComp->bAutoActivate = false;
+
+	/* Animation Assets Loading */
+	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
+		FireAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Fire.AS_Fire'"));
+	FireAnim = FireAnimAsset.Object;
+
+	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
+        ReloadAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Reload.AS_Reload'"));
+	ReloadAnim = ReloadAnimAsset.Object;
+
+	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
+        DeathAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Death.AS_Death'"));
+	DeathAnim = DeathAnimAsset.Object;
 	
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);

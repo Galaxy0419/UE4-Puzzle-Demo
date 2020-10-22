@@ -34,6 +34,10 @@ private:
 	UMaterialInstanceDynamic *CameraBloodPPM;
 	UAudioComponent *PantAudioComp;
 
+	UAnimationAsset *FireAnim;
+	UAnimationAsset *ReloadAnim;
+	UAnimationAsset *DeathAnim;
+	
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
 	FVector TraceStart, TraceEnd;
