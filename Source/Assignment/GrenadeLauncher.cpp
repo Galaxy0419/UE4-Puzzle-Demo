@@ -5,6 +5,8 @@
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"
 
+static const FVector MuzzleLocation(0.0f, 55.0f, 12.0f);
+
 AGrenadeLauncher::AGrenadeLauncher()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -16,13 +18,33 @@ AGrenadeLauncher::AGrenadeLauncher()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
 		GrenadeLauncherAsset(TEXT("StaticMesh'/Game/Mannequin/Weapon/Mesh/SM_GrenadeLauncher.SM_GrenadeLauncher'"));
 	GrenadeLauncherMeshComp->SetStaticMesh(GrenadeLauncherAsset.Object);
-	GrenadeLauncherMeshComp->Mobility = EComponentMobility::Static;
+	
+	/* Muzzle Smoke Niagara Component */
+	FireNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Weapon Muzzle Smoke Niagara Paricle System"));
+	FireNiagComp->SetupAttachment(RootComponent);
 
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
+        MuzzleSmokeAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_MuzzleSmoke.NS_MuzzleSmoke'"));
+	FireNiagComp->SetAsset(MuzzleSmokeAsset.Object);
+
+	FireNiagComp->bAutoActivate = false;
+	FireNiagComp->SetRelativeLocation(MuzzleLocation);
+
+	/* Fire Sound Component */
+	FireAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Fire Audio Component"));
+	FireAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>
+		FireAudioAsset(TEXT("SoundWave'/Game/Audios/SW_GrenadeLauncher.SW_GrenadeLauncher'"));
+	FireAudioComp->SetSound(FireAudioAsset.Object);
+
+	FireAudioComp->bAutoActivate = false;
+	FireAudioComp->SetRelativeLocation(MuzzleLocation);
+	
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Grenade Launcher"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
 
-	ItemWidgetComp->Mobility = EComponentMobility::Static;
 	ItemWidgetComp->SetGenerateOverlapEvents(false);
 	ItemWidgetComp->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
 	ItemWidgetComp->SetVisibility(false);
@@ -47,8 +69,20 @@ void AGrenadeLauncher::BeginPlay()
 
 void AGrenadeLauncher::Interact()
 {
-	Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->EquipWeapon();
+	SetActorEnableCollision(false);
+	Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GrenadeLauncher = this;
+	AttachToComponent(Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetMesh(),
+		FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), "GripPoint");
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "You Found the Stun Weapon!");
-	Destroy();
 }
 
+void AGrenadeLauncher::Fire(const FVector& Direction)
+{
+	/* Shoot Grenade */
+	
+	/* Play Particle Effects */
+	FireNiagComp->Activate(true);
+
+	/* Play Fire Sound */
+	FireAudioComp->Play();
+}

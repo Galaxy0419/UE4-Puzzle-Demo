@@ -8,11 +8,10 @@
 #include "Kismet/KismetMaterialLibrary.h"
 
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
-static const FVector MuzzleLocation(64.0f, 16.0f, 20.0f);
 
 APlayerCharacter::APlayerCharacter()
 	: bWeaponLoaded(true), InteractableItem(nullptr),
-	Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), bArmed(false)
+	Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), GrenadeLauncher(nullptr)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -60,16 +59,6 @@ APlayerCharacter::APlayerCharacter()
 	FlashLightComp->InnerConeAngle = 16.0f;
 	FlashLightComp->OuterConeAngle = 32.0f;
 
-	/* Grenade Launcher */
-	GrenadeLauncher = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Grenade Launcher"));
-	GrenadeLauncher->AttachToComponent(GetMesh(),
-		FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), "GripPoint");
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>
-		GrenadeLauncherAsset(TEXT("StaticMesh'/Game/Mannequin/Weapon/Mesh/SM_GrenadeLauncher.SM_GrenadeLauncher'"));
-	GrenadeLauncher->SetStaticMesh(GrenadeLauncherAsset.Object);
-	GrenadeLauncher->SetVisibility(false);
-
 	/* Pant Sound Component */
 	PantAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Pant Audio Component"));
 	PantAudioComp->SetupAttachment(RootComponent);
@@ -78,16 +67,6 @@ APlayerCharacter::APlayerCharacter()
 	PantAudioComp->SetSound(PantSoundAsset.Object);
 
 	PantAudioComp->bAutoActivate = false;
-
-	/* Fire Sound Component */
-	FireAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Fire Audio Component"));
-	FireAudioComp->SetupAttachment(RootComponent);
-
-	static ConstructorHelpers::FObjectFinder<USoundWave> FireAudioAsset(TEXT("SoundWave'/Game/Audios/SW_GrenadeLauncher.SW_GrenadeLauncher'"));
-	FireAudioComp->SetSound(FireAudioAsset.Object);
-
-	FireAudioComp->bAutoActivate = false;
-	FireAudioComp->SetRelativeLocation(MuzzleLocation);
 	
 	/* Animation Assets Loading */
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
@@ -97,17 +76,6 @@ APlayerCharacter::APlayerCharacter()
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
         DeathAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Death.AM_Death'"));
 	DeathAnim = DeathAnimAsset.Object;
-
-	/* Muzzle Smoke Niagara Component */
-	FireNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Weapon Muzzle Smoke Niagara Paricle System"));
-	FireNiagComp->SetupAttachment(RootComponent);
-
-	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
-		MuzzleSmokeAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_MuzzleSmoke.NS_MuzzleSmoke'"));
-	FireNiagComp->SetAsset(MuzzleSmokeAsset.Object);
-
-	FireNiagComp->bAutoActivate = false;
-	FireNiagComp->SetRelativeLocation(MuzzleLocation);
 	
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
@@ -156,14 +124,10 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 void APlayerCharacter::Fire()
 {
-	if (bArmed && bWeaponLoaded) {
+	if (IsValid(GrenadeLauncher) && bWeaponLoaded) {
 		bWeaponLoaded = false;
 
-		/* Play Particle Effects */
-		FireNiagComp->Activate(true);
-		
-		/* Play Fire Sound */
-		FireAudioComp->Play();
+		GrenadeLauncher->Fire(FVector::ZeroVector);
 
 		/* Play Fire Animation */
 		GetMesh()->GetAnimInstance()->Montage_Play(FireAnim);

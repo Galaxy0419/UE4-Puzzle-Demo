@@ -6,9 +6,9 @@
 #include "Components/SpotLightComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "NiagaraComponent.h"
 
 #include "Interactable.h"
+#include "GrenadeLauncher.h"
 #include "HUDUserWidget.h"
 
 #include "PlayerCharacter.generated.h"
@@ -31,12 +31,9 @@ private:
 	UCameraComponent *TPCameraComp;
 	USpotLightComponent *FlashLightComp;
 	USpringArmComponent *SpringArmComp;
-	UStaticMeshComponent *GrenadeLauncher;
 	UMaterialInstanceDynamic *CameraBloodPPM;
 	UAudioComponent *PantAudioComp;
-	UAudioComponent *FireAudioComp;
-	UNiagaraComponent *FireNiagComp;
-
+	
 	UPROPERTY(EditAnywhere)
 	AActor *DeathCameraActor;
 	
@@ -81,12 +78,7 @@ public:
 
 	UPROPERTY()
 	UHUDUserWidget *HUDWBP;
-
+	
 	UPROPERTY(BlueprintReadOnly)
-	bool bArmed;
-
-	FORCEINLINE void EquipWeapon() noexcept {
-		bArmed = true;
-		GrenadeLauncher->SetVisibility(true);
-	}
+	AGrenadeLauncher *GrenadeLauncher;
 };

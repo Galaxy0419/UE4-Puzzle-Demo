@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "NiagaraComponent.h"
 
 #include "Interactable.h"
 
@@ -13,10 +14,13 @@ class ASSIGNMENT_API AGrenadeLauncher : public AActor, public IInteractable
 
 private:
 	UStaticMeshComponent *GrenadeLauncherMeshComp;
+	UAudioComponent *FireAudioComp;
+	UNiagaraComponent *FireNiagComp;
 	
 public:
 	AGrenadeLauncher();
 	void BeginPlay() override;
 
 	void Interact() override;
+	void Fire(const FVector& Direction);
 };
