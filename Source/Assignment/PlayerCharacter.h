@@ -33,6 +33,7 @@ private:
 	UStaticMeshComponent *GrenadeLauncher;
 	UMaterialInstanceDynamic *CameraBloodPPM;
 	UAudioComponent *PantAudioComp;
+	UAudioComponent *FireAudioComp;
 
 	UPROPERTY(EditAnywhere)
 	AActor *DeathCameraActor;
@@ -46,6 +47,7 @@ private:
 	FVector TraceStart, TraceEnd;
 	IInteractable *InteractableItem;
 
+	void Fire();
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); }
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); }
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); }

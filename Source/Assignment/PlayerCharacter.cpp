@@ -77,6 +77,16 @@ APlayerCharacter::APlayerCharacter()
 
 	PantAudioComp->bAutoActivate = false;
 
+	/* Fire Sound Component */
+	FireAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Fire Audio Component"));
+	FireAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave> FireAudioAsset(TEXT("SoundWave'/Game/Audios/SW_GrenadeLauncher.SW_GrenadeLauncher'"));
+	FireAudioComp->SetSound(FireAudioAsset.Object);
+
+	FireAudioComp->bAutoActivate = false;
+	FireAudioComp->SetRelativeLocation(FVector(64.0f, 16.0f, 20.0f));
+	
 	/* Animation Assets Loading */
 	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
 		FireAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Fire.AS_Fire'"));
@@ -124,7 +134,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 	TraceStart = TPCamTransform.GetLocation();
 	TraceEnd = TraceStart + TPCamTransform.GetRotation().GetForwardVector() * 512.0f;
 
-	if (GetWorld()->LineTraceSingleByChannel(LineTraceHitRes, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility)) {
+	if (GetWorld()->LineTraceSingleByChannel(LineTraceHitRes, TraceStart, TraceEnd, ECC_Visibility)) {
 		if (LineTraceHitRes.Actor.IsValid() && LineTraceHitRes.Actor->GetClass()->ImplementsInterface(UInteractable::StaticClass())) {
 			InteractableItem = Cast<IInteractable>(LineTraceHitRes.Actor);
 			InteractableItem->ItemWidgetComp->SetVisibility(true);
@@ -132,6 +142,14 @@ void APlayerCharacter::Tick(float DeltaTime)
 			InteractableItem->ItemWidgetComp->SetVisibility(false);
 			InteractableItem = nullptr;
 		}
+	}
+}
+
+void APlayerCharacter::Fire()
+{
+	if (bArmed) {
+		/* Play Fire Sound */
+		FireAudioComp->Play();
 	}
 }
 
@@ -146,6 +164,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::Fire);
 }
 
 void APlayerCharacter::OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted)
