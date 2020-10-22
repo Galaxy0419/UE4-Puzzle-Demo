@@ -4,6 +4,7 @@
 
 #include "ItemUserWidget.h"
 #include "PlayerCharacter.h"
+#include "StunGrenade.h"
 
 static const FVector MuzzleLocation(0.0f, 55.0f, 12.0f);
 
@@ -79,6 +80,9 @@ void AGrenadeLauncher::Interact()
 void AGrenadeLauncher::Fire(const FVector& Direction)
 {
 	/* Shoot Grenade */
+	AStunGrenade *Grenade = GetWorld()->SpawnActorDeferred<AStunGrenade>(AStunGrenade::StaticClass(), FTransform(), this);
+	Grenade->ForwardVector = GetAttachParentActor()->GetActorForwardVector();
+	UGameplayStatics::FinishSpawningActor(Grenade, FTransform(FireNiagComp->GetComponentToWorld().GetLocation()));
 	
 	/* Play Particle Effects */
 	FireNiagComp->Activate(true);
