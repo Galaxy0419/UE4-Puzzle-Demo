@@ -1,5 +1,8 @@
 #include "StunGrenade.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
+
 AStunGrenade::AStunGrenade()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -40,6 +43,11 @@ AStunGrenade::AStunGrenade()
 	GrenadeProjMoveComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Grenade Projectile Movement Component"));
 	GrenadeProjMoveComp->bShouldBounce = false;
 	GrenadeProjMoveComp->OnProjectileStop.AddDynamic(this, &AStunGrenade::OnGrenadeStop);
+
+	/* Load Explosion Decal Material */
+	static ConstructorHelpers::FObjectFinder<UMaterial>
+		ExplosionDecalAsset(TEXT("Material'/Game/Materials/M_ExplosionDecal.M_ExplosionDecal'"));
+	ExplosionDecal = ExplosionDecalAsset.Object;
 }
 
 void AStunGrenade::BeginPlay()
@@ -51,5 +59,8 @@ void AStunGrenade::BeginPlay()
 
 void AStunGrenade::OnGrenadeStop(const FHitResult& ImpactResult)
 {
+	UGameplayStatics::SpawnDecalAtLocation(GetWorld(), ExplosionDecal,
+		FVector(0.0625f, 64.0f, 64.0f), ImpactResult.ImpactPoint,
+		UKismetMathLibrary::MakeRotFromX(ImpactResult.ImpactNormal), 16.0f);
 	Destroy();
 }

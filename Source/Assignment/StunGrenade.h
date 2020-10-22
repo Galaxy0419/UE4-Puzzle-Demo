@@ -18,6 +18,8 @@ private:
 	UAudioComponent *ExplosionAudioComp;
 	UProjectileMovementComponent *GrenadeProjMoveComp;
 
+	UMaterial *ExplosionDecal;
+	
 	UFUNCTION()
 	void OnGrenadeStop(const FHitResult& ImpactResult);
 	
