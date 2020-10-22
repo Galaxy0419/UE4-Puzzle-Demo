@@ -8,9 +8,11 @@
 #include "Kismet/KismetMaterialLibrary.h"
 
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
+static const FVector MuzzleLocation(64.0f, 16.0f, 20.0f);
 
 APlayerCharacter::APlayerCharacter()
-	: InteractableItem(nullptr), Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), bArmed(false)
+	: bWeaponLoaded(true), InteractableItem(nullptr),
+	Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), bArmed(false)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -85,16 +87,12 @@ APlayerCharacter::APlayerCharacter()
 	FireAudioComp->SetSound(FireAudioAsset.Object);
 
 	FireAudioComp->bAutoActivate = false;
-	FireAudioComp->SetRelativeLocation(FVector(64.0f, 16.0f, 20.0f));
+	FireAudioComp->SetRelativeLocation(MuzzleLocation);
 	
 	/* Animation Assets Loading */
-	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
-		FireAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Fire.AS_Fire'"));
+	static ConstructorHelpers::FObjectFinder<UAnimMontage>
+		FireAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Fire.AM_Fire'"));
 	FireAnim = FireAnimAsset.Object;
-
-	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
-        ReloadAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Reload.AS_Reload'"));
-	ReloadAnim = ReloadAnimAsset.Object;
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
         DeathAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Death.AM_Death'"));
@@ -147,9 +145,14 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 void APlayerCharacter::Fire()
 {
-	if (bArmed) {
+	if (bArmed && bWeaponLoaded) {
+		bWeaponLoaded = false;
+		
 		/* Play Fire Sound */
 		FireAudioComp->Play();
+
+		/* Play Fire Animation */
+		GetMesh()->GetAnimInstance()->Montage_Play(FireAnim);
 	}
 }
 
@@ -171,6 +174,8 @@ void APlayerCharacter::OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted
 {
 	if (Montage == DeathAnim)
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);
+	else if (Montage == FireAnim)
+		bWeaponLoaded = true;
 }
 
 void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,

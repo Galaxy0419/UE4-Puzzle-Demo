@@ -38,9 +38,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	AActor *DeathCameraActor;
 	
-	UAnimationAsset *FireAnim;
-	UAnimationAsset *ReloadAnim;
+	UAnimMontage *FireAnim;
 	UAnimMontage *DeathAnim;
+
+	bool bWeaponLoaded;
 	
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
