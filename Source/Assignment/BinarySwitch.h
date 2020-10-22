@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "GameFramework/Actor.h"
 
 #include "Interactable.h"
@@ -22,6 +23,7 @@ class ASSIGNMENT_API ABinarySwitch final : public AActor, public IInteractable
 
 private:
 	UStaticMeshComponent *SwitchMeshComp;
+	UAudioComponent *ClickAudioComp;
 
 	UPROPERTY(EditAnywhere, meta = (Bitmask, BitmaskEnum = "ELightMask"), DisplayName = "Lights to Trun On")
 	uint8 LightMasks;

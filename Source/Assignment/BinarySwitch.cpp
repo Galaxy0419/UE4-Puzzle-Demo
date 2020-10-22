@@ -23,6 +23,16 @@ ABinarySwitch::ABinarySwitch()
 	SwitchMeshComp->SetRelativeScale3D(FVector(0.125f, 0.5f, 0.5f));
 	SwitchMeshComp->SetGenerateOverlapEvents(false);
 
+	/* Click Audio Component */
+	ClickAudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("Click Audio Component"));
+	ClickAudioComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>
+		ClickSoundAsset(TEXT("SoundWave'/Game/Audios/SW_ButtonClick.SW_ButtonClick'"));
+	ClickAudioComp->SetSound(ClickSoundAsset.Object);
+
+	ClickAudioComp->bAutoActivate = false;
+	
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Binary Switch Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
@@ -51,5 +61,6 @@ void ABinarySwitch::BeginPlay()
 
 void ABinarySwitch::Interact()
 {
+	ClickAudioComp->Play();
 	Cast<AMainLevelScriptActor>(GetWorld()->GetLevelScriptActor())->UpdateBinaryLight(LightMasks);
 }
