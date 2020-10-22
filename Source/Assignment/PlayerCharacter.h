@@ -6,6 +6,7 @@
 #include "Components/SpotLightComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "NiagaraComponent.h"
 
 #include "Interactable.h"
 #include "HUDUserWidget.h"
@@ -34,6 +35,7 @@ private:
 	UMaterialInstanceDynamic *CameraBloodPPM;
 	UAudioComponent *PantAudioComp;
 	UAudioComponent *FireAudioComp;
+	UNiagaraComponent *FireNiagComp;
 
 	UPROPERTY(EditAnywhere)
 	AActor *DeathCameraActor;

@@ -97,6 +97,17 @@ APlayerCharacter::APlayerCharacter()
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
         DeathAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Death.AM_Death'"));
 	DeathAnim = DeathAnimAsset.Object;
+
+	/* Muzzle Smoke Niagara Component */
+	FireNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Weapon Muzzle Smoke Niagara Paricle System"));
+	FireNiagComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
+		MuzzleSmokeAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_MuzzleSmoke.NS_MuzzleSmoke'"));
+	FireNiagComp->SetAsset(MuzzleSmokeAsset.Object);
+
+	FireNiagComp->bAutoActivate = false;
+	FireNiagComp->SetRelativeLocation(MuzzleLocation);
 	
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
@@ -147,6 +158,9 @@ void APlayerCharacter::Fire()
 {
 	if (bArmed && bWeaponLoaded) {
 		bWeaponLoaded = false;
+
+		/* Play Particle Effects */
+		FireNiagComp->Activate(true);
 		
 		/* Play Fire Sound */
 		FireAudioComp->Play();
@@ -178,8 +192,8 @@ void APlayerCharacter::OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted
 		bWeaponLoaded = true;
 }
 
-void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-                                             UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent,
+	AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	if (OtherComp->ComponentHasTag("Exit"))
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Won);
