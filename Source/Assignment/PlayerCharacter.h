@@ -34,9 +34,12 @@ private:
 	UMaterialInstanceDynamic *CameraBloodPPM;
 	UAudioComponent *PantAudioComp;
 
+	UPROPERTY(EditAnywhere)
+	AActor *DeathCameraActor;
+	
 	UAnimationAsset *FireAnim;
 	UAnimationAsset *ReloadAnim;
-	UAnimationAsset *DeathAnim;
+	UAnimMontage *DeathAnim;
 	
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
@@ -49,6 +52,9 @@ private:
 	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(); }
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
+	UFUNCTION()
+	void OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted);
+	
 	UFUNCTION()
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
 		UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);

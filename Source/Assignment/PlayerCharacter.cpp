@@ -44,10 +44,10 @@ APlayerCharacter::APlayerCharacter()
 	SpringArmComp->TargetArmLength = 256.0f;
 	SpringArmComp->bUsePawnControlRotation = true;
 
-	/* Camera Component */
+	/* Third Person Camera Component */
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
 	TPCameraComp->SetupAttachment(SpringArmComp);
-
+	
 	/* Flash Light Component */
 	FlashLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flash Light Component"));
 	FlashLightComp->SetupAttachment(SpringArmComp);
@@ -86,8 +86,8 @@ APlayerCharacter::APlayerCharacter()
         ReloadAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Reload.AS_Reload'"));
 	ReloadAnim = ReloadAnimAsset.Object;
 
-	static ConstructorHelpers::FObjectFinder<UAnimationAsset>
-        DeathAnimAsset(TEXT("AnimSequence'/Game/Mannequin/Animations/AS_Death.AS_Death'"));
+	static ConstructorHelpers::FObjectFinder<UAnimMontage>
+        DeathAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Death.AM_Death'"));
 	DeathAnim = DeathAnimAsset.Object;
 	
 	/* Actor Damage Binding */
@@ -111,6 +111,9 @@ void APlayerCharacter::BeginPlay()
 	UMaterial *CameraBloodPPMAsset = LoadObject<UMaterial>(nullptr, TEXT("Material'/Game/Materials/PPM_Blood.PPM_Blood'"));
 	CameraBloodPPM = UKismetMaterialLibrary::CreateDynamicMaterialInstance(GetWorld(), CameraBloodPPMAsset);
 	TPCameraComp->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraBloodPPM));
+
+	/* Bind Montage End Event */
+	GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &APlayerCharacter::OnDeathAnimEnded);
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -145,8 +148,14 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
 }
 
+void APlayerCharacter::OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted)
+{
+	if (Montage == DeathAnim)
+		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);
+}
+
 void APlayerCharacter::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-	UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+                                             UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	if (OtherComp->ComponentHasTag("Exit"))
 		OnGamePlayStateChange.Broadcast(EGamePlayState::Won);
@@ -173,6 +182,7 @@ void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
 		/* Update HUD Health Progress Bar */
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 	} else if (NewHealth <= 0.0f) {
-		OnGamePlayStateChange.Broadcast(EGamePlayState::Dead);
+		GetWorld()->GetFirstPlayerController()->SetViewTargetWithBlend(DeathCameraActor, 1.5f);
+		GetMesh()->GetAnimInstance()->Montage_Play(DeathAnim);
 	}
 }
