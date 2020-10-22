@@ -51,7 +51,7 @@ private:
 	FORCEINLINE void MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); }
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); }
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); }
-	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(); }
+	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(this); }
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 	UFUNCTION()

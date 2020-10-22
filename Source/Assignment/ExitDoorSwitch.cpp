@@ -76,7 +76,7 @@ void AExitDoorSwitch::Tick(float DeltaTime)
 		SwitchMeshComp->SetRelativeRotation(SwitchCurrentRotation);
 }
 
-void AExitDoorSwitch::Interact()
+void AExitDoorSwitch::Interact(APlayerCharacter *Player)
 {
 	if (!bDoorOpened) {
 		if (bFuseFound) {

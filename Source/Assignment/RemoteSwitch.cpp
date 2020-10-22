@@ -55,7 +55,7 @@ void ARemoteSwitch::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void ARemoteSwitch::Interact()
+void ARemoteSwitch::Interact(APlayerCharacter *Player)
 {
 	if (!bOpened) {
 		bOpened = true;

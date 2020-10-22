@@ -59,7 +59,7 @@ void ABinarySwitch::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void ABinarySwitch::Interact()
+void ABinarySwitch::Interact(APlayerCharacter *Player)
 {
 	ClickAudioComp->Play();
 	Cast<AMainLevelScriptActor>(GetWorld()->GetLevelScriptActor())->UpdateBinaryLight(LightMasks);

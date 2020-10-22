@@ -30,5 +30,5 @@ public:
 
 	bool bFuseFound;
 
-	void Interact() override;
+	void Interact(APlayerCharacter *Player) override;
 };

@@ -3,8 +3,6 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-
-#include "Interactable.h"
 #include "Kismet/KismetMaterialLibrary.h"
 
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);

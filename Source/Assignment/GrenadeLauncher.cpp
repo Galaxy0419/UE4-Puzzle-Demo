@@ -3,8 +3,8 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "ItemUserWidget.h"
-#include "PlayerCharacter.h"
 #include "StunGrenade.h"
+#include "PlayerCharacter.h"
 
 static const FVector MuzzleLocation(0.0f, 55.0f, 12.0f);
 
@@ -68,11 +68,11 @@ void AGrenadeLauncher::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void AGrenadeLauncher::Interact()
+void AGrenadeLauncher::Interact(APlayerCharacter *Player)
 {
 	SetActorEnableCollision(false);
-	Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GrenadeLauncher = this;
-	AttachToComponent(Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetMesh(),
+	Player->GrenadeLauncher = this;
+	AttachToComponent(Player->GetMesh(),
 		FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), "GripPoint");
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "You Found the Stun Weapon!");
 }

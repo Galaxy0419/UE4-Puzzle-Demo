@@ -32,5 +32,5 @@ public:
 	ABinarySwitch();
 	void BeginPlay() override;
 
-	void Interact() override;
+	void Interact(APlayerCharacter *Player) override;
 };

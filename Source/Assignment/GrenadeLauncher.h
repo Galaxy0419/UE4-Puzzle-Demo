@@ -21,6 +21,6 @@ public:
 	AGrenadeLauncher();
 	void BeginPlay() override;
 
-	void Interact() override;
+	void Interact(APlayerCharacter *Player) override;
 	void Fire(const FVector& Direction);
 };

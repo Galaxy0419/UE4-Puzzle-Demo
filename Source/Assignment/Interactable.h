@@ -5,6 +5,8 @@
 
 #include "Interactable.generated.h"
 
+class APlayerCharacter;
+
 UINTERFACE(MinimalAPI)
 class UInteractable : public UInterface
 {
@@ -18,5 +20,5 @@ class ASSIGNMENT_API IInteractable
 public:
 	UWidgetComponent *ItemWidgetComp;
 
-	virtual void Interact() PURE_VIRTUAL(&IInteractable::Interact,);
+	virtual void Interact(APlayerCharacter *Player) PURE_VIRTUAL(&IInteractable::Interact,);
 };

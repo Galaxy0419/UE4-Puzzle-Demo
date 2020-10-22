@@ -108,11 +108,9 @@ void AFuseBox::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void AFuseBox::Interact()
+void AFuseBox::Interact(APlayerCharacter *Player)
 {
-	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
-	if (PlayerCharacter->FuseNumber > 0) {
+	if (Player->FuseNumber > 0) {
 		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "Door Switch is Activated");
 		FuseMeshComp->SetVisibility(true);
 		FuseBoxLightMeshComp->SetMaterial(0, OnMaterial);

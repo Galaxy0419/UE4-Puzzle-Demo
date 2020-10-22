@@ -26,5 +26,5 @@ public:
 
 	FOnSwitchToggle OnSwitchToggle;
 
-	void Interact() override;
+	void Interact(APlayerCharacter *Player) override;
 };

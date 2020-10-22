@@ -49,12 +49,9 @@ void AFuse::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void AFuse::Interact()
+void AFuse::Interact(APlayerCharacter *Player)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "You Found the Fuse!");
-	
-	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	PlayerCharacter->HUDWBP->FuseNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->FuseNumber += 1)));
-
+	Player->HUDWBP->FuseNumberText->SetText(FText::FromString(FString::FromInt(Player->FuseNumber += 1)));
 	Destroy();
 }

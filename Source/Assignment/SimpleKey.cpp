@@ -50,13 +50,10 @@ void ASimpleKey::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void ASimpleKey::Interact()
+void ASimpleKey::Interact(APlayerCharacter *Player)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, "A Door is Opened");
 	SimpleDoorToUnlock->Open();
-	
-	APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	PlayerCharacter->HUDWBP->KeyNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->KeyNumber += 1)));
-
+	Player->HUDWBP->KeyNumberText->SetText(FText::FromString(FString::FromInt(Player->KeyNumber += 1)));
 	Destroy();
 }

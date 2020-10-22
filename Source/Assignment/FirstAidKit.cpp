@@ -58,15 +58,11 @@ void AFirstAidKit::BeginPlay()
 	ItemWidgetComp->SetWidget(ItemWidget);
 }
 
-void AFirstAidKit::Interact()
+void AFirstAidKit::Interact(APlayerCharacter *Player)
 {
-	if (Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Health < 1.0f) {
-		UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)
-			->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
-
-		APlayerCharacter *PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		PlayerCharacter->HUDWBP->FirstAidKitNumberText->SetText(FText::FromString(FString::FromInt(PlayerCharacter->FirstAidKitNumber += 1)));
-
+	if (Player->Health < 1.0f) {
+		Player->TakeDamage(RECOVER_HEALTH, FDamageEvent(), nullptr, this);
+		Player->HUDWBP->FirstAidKitNumberText->SetText(FText::FromString(FString::FromInt(Player->FirstAidKitNumber += 1)));
 		Destroy();
 	}
 } 
