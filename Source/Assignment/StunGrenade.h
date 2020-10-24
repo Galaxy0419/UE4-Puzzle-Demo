@@ -22,6 +22,9 @@ private:
 	
 	UFUNCTION()
 	void OnGrenadeStop(const FHitResult& ImpactResult);
+
+	UFUNCTION()
+	void OnExplosionSoundFinished();
 	
 public:
 	AStunGrenade();

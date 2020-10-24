@@ -9,7 +9,7 @@ AStunGrenade::AStunGrenade()
 
 	/* Grenade Mesh Component */
 	GrenadeMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Grenade Static Mesh Component"));
-	GrenadeMeshComp->SetupAttachment(RootComponent);
+	RootComponent = GrenadeMeshComp;
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
 		SphereMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
@@ -38,6 +38,7 @@ AStunGrenade::AStunGrenade()
 	ExplosionAudioComp->SetSound(ExplosionSoundAsset.Object);
 
 	ExplosionAudioComp->bAutoActivate = false;
+	ExplosionAudioComp->OnAudioFinished.AddDynamic(this, &AStunGrenade::OnExplosionSoundFinished);
 
 	/* Projectile Movement Component */
 	GrenadeProjMoveComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Grenade Projectile Movement Component"));
@@ -59,8 +60,20 @@ void AStunGrenade::BeginPlay()
 
 void AStunGrenade::OnGrenadeStop(const FHitResult& ImpactResult)
 {
+	/* Play Particle Effects */
+	LightningNiagComp->SetRelativeScale3D(FVector(16.0f));
+	LightningNiagComp->Activate(true);
+
+	/* Play Explosion Sound */
+	ExplosionAudioComp->Play();
+
+	/* Spawn Decal */
 	UGameplayStatics::SpawnDecalAtLocation(GetWorld(), ExplosionDecal,
-		FVector(0.0625f, 64.0f, 64.0f), ImpactResult.ImpactPoint,
-		UKismetMathLibrary::MakeRotFromX(ImpactResult.ImpactNormal), 16.0f);
+        FVector(0.0625f, 64.0f, 64.0f), ImpactResult.ImpactPoint,
+        UKismetMathLibrary::MakeRotFromX(ImpactResult.ImpactNormal), 16.0f);
+}
+
+void AStunGrenade::OnExplosionSoundFinished()
+{
 	Destroy();
 }
