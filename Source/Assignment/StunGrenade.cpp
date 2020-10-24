@@ -3,6 +3,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
+#include "AICharacter.h"
+
 AStunGrenade::AStunGrenade()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -45,6 +47,13 @@ AStunGrenade::AStunGrenade()
 	GrenadeProjMoveComp->bShouldBounce = false;
 	GrenadeProjMoveComp->OnProjectileStop.AddDynamic(this, &AStunGrenade::OnGrenadeStop);
 
+	/* Stun Sphere Component */
+	StunSphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("Stun Sphere Component"));
+	StunSphereComp->SetupAttachment(RootComponent);
+
+	StunSphereComp->SetSphereRadius(0.0f);
+	StunSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AStunGrenade::OnSphereBeginOverlap);
+	
 	/* Load Explosion Decal Material */
 	static ConstructorHelpers::FObjectFinder<UMaterial>
 		ExplosionDecalAsset(TEXT("Material'/Game/Materials/M_ExplosionDecal.M_ExplosionDecal'"));
@@ -71,9 +80,20 @@ void AStunGrenade::OnGrenadeStop(const FHitResult& ImpactResult)
 	UGameplayStatics::SpawnDecalAtLocation(GetWorld(), ExplosionDecal,
         FVector(0.0625f, 64.0f, 64.0f), ImpactResult.ImpactPoint,
         UKismetMathLibrary::MakeRotFromX(ImpactResult.ImpactNormal), 16.0f);
+
+	/* Change Sphere Radius to Update Overlap Event */
+	StunSphereComp->SetSphereRadius(2048.0f, true);
 }
 
 void AStunGrenade::OnExplosionSoundFinished()
 {
 	Destroy();
+}
+
+void AStunGrenade::OnSphereBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
+	UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AAICharacter *EnemyAI = Cast<AAICharacter>(OtherActor);
+	if (IsValid(EnemyAI))
+		EnemyAI->Stun();
 }

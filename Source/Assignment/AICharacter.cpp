@@ -12,7 +12,7 @@ AAICharacter::AAICharacter()
 
 	/* Capsule Component */
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
-	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
+	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(false);
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AAICharacter::OnCapsuleHit);
 
@@ -31,7 +31,6 @@ AAICharacter::AAICharacter()
 	static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>
 		EnemyLogoAsset(TEXT("MaterialInstanceConstant'/Game/Mannequin/Character/Materials/MI_Enemy_Logo.MI_Enemy_Logo'"));
 	GetMesh()->SetMaterial(1, EnemyLogoAsset.Object);
-	
 
 	/* Set Animation */
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
@@ -45,6 +44,16 @@ AAICharacter::AAICharacter()
 	bUseControllerRotationRoll = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 5.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+
+	/* Stun Niagara System Component */
+	StunNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Stun Niagara System Component"));
+	StunNiagComp->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
+        LightningNiagAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_Lightning.NS_Lightning'"));
+	StunNiagComp->SetAsset(LightningNiagAsset.Object);
+
+	StunNiagComp->bAutoActivate = false;
 
 	/* AI Controller */
 	AutoReceiveInput = EAutoReceiveInput::Disabled;
@@ -62,7 +71,7 @@ void AAICharacter::BeginPlay()
 	SpawnInfo.OverrideLevel = GetLevel();
 	SpawnInfo.ObjectFlags |= RF_Transient;
 	
-	AAIController* ControllerInstance = GetWorld()->SpawnActor<AAIController>(
+	ControllerInstance = GetWorld()->SpawnActor<AAIController>(
 		AIControllerClassOverride, GetActorLocation(), GetActorRotation(), SpawnInfo);
 	ControllerInstance->Possess(this);
 
@@ -74,4 +83,33 @@ void AAICharacter::OnCapsuleHit(UPrimitiveComponent *HitComponent,
 {
 	if (Cast<APlayerCharacter>(OtherActor))
 		OtherActor->TakeDamage(-0.01f, FDamageEvent(), nullptr, this);
+}
+
+void AAICharacter::Stun()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Stun!"));
+	/* Set Stun Timer */
+	GetWorldTimerManager().SetTimer(StunTimerHandle, this, &AAICharacter::OnStunFinished, 4.0f);
+
+	/* Activate Niagara System */
+	StunNiagComp->Activate(true);
+
+	/* Stop AI Movement */
+	ControllerInstance->StopMovement();
+	ControllerInstance->UnPossess();
+}
+
+void AAICharacter::OnStunFinished()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Back to Patrol"));
+
+	/* Deactivate Niagara System */
+	StunNiagComp->Deactivate();
+	
+	/* Continue Patrolling */
+	ControllerInstance->Possess(this);
+	ControllerInstance->MoveToLocation(GetActorLocation());
+
+	/* Clear Timer */
+	GetWorldTimerManager().ClearTimer(StunTimerHandle);
 }
