@@ -87,7 +87,6 @@ void AAICharacter::OnCapsuleHit(UPrimitiveComponent *HitComponent,
 
 void AAICharacter::Stun()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Stun!"));
 	/* Set Stun Timer */
 	GetWorldTimerManager().SetTimer(StunTimerHandle, this, &AAICharacter::OnStunFinished, 4.0f);
 
@@ -101,8 +100,6 @@ void AAICharacter::Stun()
 
 void AAICharacter::OnStunFinished()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Back to Patrol"));
-
 	/* Deactivate Niagara System */
 	StunNiagComp->Deactivate();
 	

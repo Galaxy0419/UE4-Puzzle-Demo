@@ -55,6 +55,7 @@ void AMainLevelScriptActor::UpdateBinaryLight(uint8 Mask)
 		if (bAllOn) {
 			bBinaryDoorOpened = true;
 			BinarySimpleDoor->Open();
+			LaserCutter->SetActorTickEnabled(true);
 		}
 	}
 }

@@ -7,6 +7,7 @@
 #include "BinaryLight.h"
 #include "SimpleDoor.h"
 #include "GameOverUserWidget.h"
+#include "LaserCutter.h"
 #include "PlayerCharacter.h"
 
 #include "MainLevelScriptActor.generated.h"
@@ -30,6 +31,9 @@ private:
 
 	bool bBinaryDoorOpened;
 
+	UPROPERTY(EditAnywhere)
+	ALaserCutter *LaserCutter;
+	
 	UPROPERTY(EditAnywhere)
 	ASimpleDoor *BinarySimpleDoor;
 

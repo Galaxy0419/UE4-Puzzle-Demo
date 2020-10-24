@@ -8,6 +8,7 @@ ALaserCutter::ALaserCutter()
 	: TimeElapsed(0.0f)
 {
 	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	/* Laser Mesh */
 	LaserMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Laser Root Mesh Component"));
