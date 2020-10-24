@@ -4,6 +4,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMaterialLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
 
@@ -125,7 +126,8 @@ void APlayerCharacter::Fire()
 	if (IsValid(GrenadeLauncher) && bWeaponLoaded) {
 		bWeaponLoaded = false;
 
-		GrenadeLauncher->Fire(FVector::ZeroVector);
+		GrenadeLauncher->Fire(GetActorForwardVector()
+			.RotateAngleAxis(GetControlRotation().Pitch, -GetActorRightVector()));
 
 		/* Play Fire Animation */
 		GetMesh()->GetAnimInstance()->Montage_Play(FireAnim);

@@ -81,7 +81,7 @@ void AGrenadeLauncher::Fire(const FVector& Direction)
 {
 	/* Shoot Grenade */
 	AStunGrenade *Grenade = GetWorld()->SpawnActorDeferred<AStunGrenade>(AStunGrenade::StaticClass(), FTransform(), this);
-	Grenade->ForwardVector = GetAttachParentActor()->GetActorForwardVector();
+	Grenade->ForwardVector = Direction;
 	UGameplayStatics::FinishSpawningActor(Grenade, FTransform(FireNiagComp->GetComponentToWorld().GetLocation()));
 	
 	/* Play Particle Effects */
