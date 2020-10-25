@@ -184,8 +184,16 @@ void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
 		/* Update HUD Health Progress Bar */
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 	} else if (NewHealth <= 0.0f) {
+		/* Update HUD Health Progress Bar */
+		HUDWBP->HealthProgressBar->SetPercent(0.0f);
+
+		/* Disable Player Input */
 		DisableInput(Cast<APlayerController>(GetController()));
+
+		/* Switch to Top Down Camera */
 		GetWorld()->GetFirstPlayerController()->SetViewTargetWithBlend(DeathCameraActor, 1.5f);
+
+		/* Play Death Animation */
 		GetMesh()->GetAnimInstance()->Montage_Play(DeathAnim);
 	}
 }
