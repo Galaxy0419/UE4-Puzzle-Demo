@@ -16,8 +16,8 @@ private:
 	void OnPlayerInSight(AActor *Player, FAIStimulus Stimulus);
 
 protected:
-	UNavigationSystemV1 *NavigationSystem;
 	APawn *TargetPlayer;
+	UNavigationSystemV1 *NavigationSystem;
 
 public:
 	AAIControllerBase();

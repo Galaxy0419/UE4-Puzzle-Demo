@@ -2,11 +2,13 @@
 
 void ALevelAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult &Result)
 {
+	Super::OnMoveCompleted(RequestID, Result);
+	
 	if (TargetPlayer) {
 		MoveToLocation(TargetPlayer->GetActorLocation());
 	} else {
 		FNavLocation RandLocation;
 		NavigationSystem->GetRandomReachablePointInRadius(GetPawn()->GetActorLocation(), 1024.0f, RandLocation);
-		MoveToLocation(RandLocation.Location);	
+		MoveToLocation(RandLocation.Location);
 	}
 }
