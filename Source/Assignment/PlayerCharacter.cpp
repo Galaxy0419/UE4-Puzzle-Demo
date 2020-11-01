@@ -91,7 +91,6 @@ void APlayerCharacter::BeginPlay()
 	/* Create HUD Widget */
 	UClass *HUDWBPClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_HUD.WBP_HUD_C'"));
 	HUDWBP = CreateWidget<UHUDUserWidget>(GetWorld(), HUDWBPClass);
-	HUDWBP->AddToViewport(0);
 
 	/* Create & Set Camera Blood Dynamic Post Process Material */
 	UMaterial *CameraBloodPPMAsset = LoadObject<UMaterial>(nullptr, TEXT("Material'/Game/Materials/PPM_Blood.PPM_Blood'"));

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Blueprint/UserWidget.h"
 #include "Engine/LevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
 
 #include "BinaryLight.h"
 #include "SimpleDoor.h"
@@ -21,16 +21,14 @@ class ASSIGNMENT_API AMainLevelScriptActor final : public ALevelScriptActor
 	
 private:
 	UPROPERTY()
-	UUserWidget *MenuWBP;
-
-	UPROPERTY()
 	UUserWidget *PauseWBP;
 
 	UPROPERTY()
 	UGameOverUserWidget *GameOverWBP;
 
 	bool bBinaryDoorOpened;
-
+	ULevelSequencePlayer *IntroSequencePlayer;
+	
 	UPROPERTY(EditAnywhere)
 	ALaserCutter *LaserCutter;
 	
@@ -43,6 +41,9 @@ private:
 	FTimerHandle HealthLossTimerHandle;
 	FORCEINLINE void LossHealth() { MainCharacter->TakeDamage(FOG_DAMAGE, FDamageEvent(), nullptr, this); };
 
+	UFUNCTION()
+	void OnIntroFinished();
+	
 	void UpdateGamePlayState(EGamePlayState State) const;
 
 public:

@@ -10,18 +10,7 @@ void AMainLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/* Bind Events */
-	MainCharacter->OnGamePlayStateChange.AddUObject(this, &AMainLevelScriptActor::UpdateGamePlayState);
-
-	/* Set Timer for Automatic Health Loss */
-	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &AMainLevelScriptActor::LossHealth, 4.0f, true);
-
 	/* Create Widgets */
-	UClass *MenuWBPClass = StaticLoadClass(UUserWidget::StaticClass(),
-		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Menu.WBP_Menu_C'"));
-	MenuWBP = CreateWidget<UUserWidget>(GetWorld(), MenuWBPClass);
-	MenuWBP->AddToViewport(1);
-
 	UClass *PauseWBPClass = StaticLoadClass(UUserWidget::StaticClass(),
 		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Pause.WBP_Pause_C'"));
 	PauseWBP = CreateWidget<UUserWidget>(GetWorld(), PauseWBPClass);
@@ -30,12 +19,23 @@ void AMainLevelScriptActor::BeginPlay()
 		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Game_Over.WBP_Game_Over_C'"));
 	GameOverWBP = CreateWidget<UGameOverUserWidget>(GetWorld(), GameOverWBPClass);
 
-	/* Show Mouse Cursor */
-	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
-	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+	/* Bind Events */
+	MainCharacter->OnGamePlayStateChange.AddUObject(this, &AMainLevelScriptActor::UpdateGamePlayState);
 
-	/* Pause The Game First */
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
+	/* Disable Player Input When Playing Intro Sequence */
+	MainCharacter->DisableInput(Cast<APlayerController>(MainCharacter->GetController()));
+
+	/* Load Sequence Asset */
+	ALevelSequenceActor *SequencePlayerActor;
+	ULevelSequence *IntroSequenceAsset = LoadObject<ULevelSequence>(this, TEXT("LevelSequence'/Game/Cinematics/Master.Master'"));
+	IntroSequencePlayer = ULevelSequencePlayer::CreateLevelSequencePlayer(
+		GetWorld(), IntroSequenceAsset, FMovieSceneSequencePlaybackSettings(), SequencePlayerActor);
+
+	/* Bind Sequence Event */
+	IntroSequencePlayer->OnFinished.AddDynamic(this, &AMainLevelScriptActor::OnIntroFinished);
+
+	/* Play the Sequence */
+	IntroSequencePlayer->Play();
 }
 
 void AMainLevelScriptActor::UpdateBinaryLight(uint8 Mask)
@@ -58,6 +58,18 @@ void AMainLevelScriptActor::UpdateBinaryLight(uint8 Mask)
 			LaserCutter->SetActorTickEnabled(true);
 		}
 	}
+}
+
+void AMainLevelScriptActor::OnIntroFinished()
+{
+	/* Set Timer for Automatic Health Loss */
+	GetWorldTimerManager().SetTimer(HealthLossTimerHandle, this, &AMainLevelScriptActor::LossHealth, 4.0f, true);
+
+	/* Add HUD to Viewport */
+	MainCharacter->HUDWBP->AddToViewport(0);
+
+	/* Enable Character Input */
+	MainCharacter->EnableInput(Cast<APlayerController>(MainCharacter->GetController()));
 }
 
 void AMainLevelScriptActor::UpdateGamePlayState(EGamePlayState State) const
