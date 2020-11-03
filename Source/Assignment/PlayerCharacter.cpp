@@ -188,6 +188,9 @@ void APlayerCharacter::OnCharacterTakeDamage(AActor *DamagedActor,
 		/* Update HUD Health Progress Bar */
 		HUDWBP->HealthProgressBar->SetPercent(Health = NewHealth);
 	} else if (NewHealth <= 0.0f) {
+		/* Unbind OnTakeAnyDamage Event So It won't be Executed Twice */
+		OnTakeAnyDamage.RemoveAll(this);
+		
 		/* Update HUD Health Progress Bar */
 		HUDWBP->HealthProgressBar->SetPercent(0.0f);
 
