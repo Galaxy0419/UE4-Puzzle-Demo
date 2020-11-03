@@ -1,5 +1,6 @@
-# Resident Evil: Assignment 2
-FIT2097 Assignment 2 Project Repository
+# Resident Evil: Assignment 3
+FIT2097 Assignment 3 Project Repository
+
 
 ## How to Play
 - W: Move Forward
@@ -7,16 +8,42 @@ FIT2097 Assignment 2 Project Repository
 - A: Move Left
 - D: Move Right
 - E: Interact with Items
+- V: Toggle Night Vision
 - P: Pause the Game
+
 
 ## Implemented Features
 All
 
 ## Extra Features
-- Fog Effect Post Porocessing Material
+### Functional
+- Grenade Launcher
 - Laser Cutter
-- Various Camera Effects
+
+### Animation
+- Directional Movement Blend Space
+- 1D Aim Offset (Player Character Aiming)
+- Reload & Death Animation Montage
+- Custom Animation Blueprints
+
+### Material
+- Fog Effect Post Processing Material
+- Night Vision Post Processing Material
+- Explosion Decal Material
+
+### Niagara Effects
+- Grenade Launcher Muzzle Smoke
+- Fuse Box Electric Burst
+
+### Sound
+- Character Randomized Footstep Sound
+- Player Panting Sound (Low Health)
+- Simple Door, Exit Door, Button Click, Fire Sound, Fuse Box...
+
+### Misc
+- BSP Brush Generated Environment
+
 
 ## Extra Notes
-This Git Respository Uses LFS to Store Binary Assets  
+This Git Repository Uses LFS to Store Binary Assets  
 Please make sure you have LFS installed when cloning this repository
