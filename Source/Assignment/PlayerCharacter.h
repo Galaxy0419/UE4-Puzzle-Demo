@@ -41,6 +41,7 @@ private:
 	UAnimMontage *DeathAnim;
 
 	bool bWeaponLoaded;
+	float NightVisionBlendWeight;
 	
 	FHitResult LineTraceHitRes;
 	FTransform TPCamTransform;
@@ -52,6 +53,10 @@ private:
 	FORCEINLINE void MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); }
 	FORCEINLINE void Pause() { OnGamePlayStateChange.Broadcast(EGamePlayState::Paused); }
 	FORCEINLINE void Interact() { if (InteractableItem) InteractableItem->Interact(this); }
+	FORCEINLINE void ToggleNightVision() {
+		NightVisionBlendWeight = (NightVisionBlendWeight == 1.0f ? 0.0f : 1.0f);
+		TPCameraComp->PostProcessSettings.WeightedBlendables.Array[0].Weight = NightVisionBlendWeight;
+	}
 	void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 	UFUNCTION()

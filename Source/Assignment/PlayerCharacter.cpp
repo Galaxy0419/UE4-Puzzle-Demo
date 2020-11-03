@@ -9,7 +9,7 @@
 static const FVector AimOffset(0.0f, 64.0f, 90.0f);
 
 APlayerCharacter::APlayerCharacter()
-	: bWeaponLoaded(true), InteractableItem(nullptr),
+	: bWeaponLoaded(true), NightVisionBlendWeight(0.0f), InteractableItem(nullptr),
 	Health(1.0f), FirstAidKitNumber(0), KeyNumber(0), FuseNumber(0), GrenadeLauncher(nullptr)
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -47,7 +47,11 @@ APlayerCharacter::APlayerCharacter()
 	/* Third Person Camera Component */
 	TPCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera Component"));
 	TPCameraComp->SetupAttachment(SpringArmComp);
-	
+
+	/* Add Night Vision Post Processing Material */
+	static ConstructorHelpers::FObjectFinder<UMaterial> NightVisionPPMAsset(TEXT("Material'/Game/Materials/PPM_NightVision.PPM_NightVision'"));
+	TPCameraComp->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(0.0f, NightVisionPPMAsset.Object));
+
 	/* Flash Light Component */
 	FlashLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flash Light Component"));
 	FlashLightComp->SetupAttachment(SpringArmComp);
@@ -145,6 +149,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::Fire);
+	PlayerInputComponent->BindAction("ToggleNightVision", IE_Pressed, this, &APlayerCharacter::ToggleNightVision);
 }
 
 void APlayerCharacter::OnDeathAnimEnded(UAnimMontage *Montage, bool bInterrupted)
