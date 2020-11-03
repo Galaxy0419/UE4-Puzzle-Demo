@@ -8,7 +8,7 @@ UCLASS()
 class ASSIGNMENT_API ARemoteDoor final : public ASimpleDoor
 {
 	GENERATED_BODY()
-	
+
 private:
 	UPROPERTY(EditAnywhere)
 	ARemoteSwitch *SwitchToListen;

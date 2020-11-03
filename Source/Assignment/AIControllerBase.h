@@ -10,7 +10,7 @@ UCLASS()
 class ASSIGNMENT_API AAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
-	
+
 private:
 	UFUNCTION()
 	void OnPlayerInSight(AActor *Player, FAIStimulus Stimulus);

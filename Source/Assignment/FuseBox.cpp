@@ -28,7 +28,7 @@ AFuseBox::AFuseBox()
 	FuseBoxMeshComp->Mobility = EComponentMobility::Static;
 	FuseBoxMeshComp->SetRelativeScale3D(FVector(0.125f, 1.0f, 1.0f));
 	FuseBoxMeshComp->SetGenerateOverlapEvents(false);
-	
+
 	/* Fuse */
 	FuseMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fuse Mesh Component"));
 	FuseMeshComp->SetupAttachment(RootComponent);
@@ -66,11 +66,11 @@ AFuseBox::AFuseBox()
 	/* Spark Niagara System */
 	SparkNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spark Niagara System Component"));
 	SparkNiagComp->SetupAttachment(RootComponent);
-	
+
 	static ConstructorHelpers::FObjectFinder<UNiagaraSystem>
 		SparkNiagSysAsset(TEXT("NiagaraSystem'/Game/Particle_Systems/NS_Spark.NS_Spark'"));
 	SparkNiagComp->SetAsset(SparkNiagSysAsset.Object);
-	
+
 	SparkNiagComp->Mobility = EComponentMobility::Static;
 	SparkNiagComp->SetRelativeLocation(FVector(-8.0f, -32.0f, 16.0f));
 	SparkNiagComp->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));

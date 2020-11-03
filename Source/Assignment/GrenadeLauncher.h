@@ -16,7 +16,7 @@ private:
 	UStaticMeshComponent *GrenadeLauncherMeshComp;
 	UAudioComponent *FireAudioComp;
 	UNiagaraComponent *FireNiagComp;
-	
+
 public:
 	AGrenadeLauncher();
 	void BeginPlay() override;

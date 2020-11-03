@@ -12,7 +12,7 @@ UCLASS()
 class ASSIGNMENT_API ARemoteSwitch final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
-	
+
 private:
 	bool bOpened;
 

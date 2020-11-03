@@ -16,7 +16,7 @@ class ASSIGNMENT_API AFuseBox final : public AActor, public IInteractable
 
 private:
 	bool bOpened;
-	
+
 	UPROPERTY(EditAnywhere)
 	AExitDoorSwitch *ExitDoorSwitch;
 
@@ -27,7 +27,7 @@ private:
 	UStaticMeshComponent *FuseBoxLightMeshComp;
 	UNiagaraComponent *SparkNiagComp;
 	UAudioComponent *HummingAudioComp;
-	
+
 public:
 	AFuseBox();
 	void BeginPlay() override;

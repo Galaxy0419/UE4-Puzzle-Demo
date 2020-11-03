@@ -11,7 +11,7 @@ UCLASS()
 class ASSIGNMENT_API AExitDoorSwitch final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
-	
+
 private:
 	UStaticMeshComponent *SwitchBaseMeshComp;
 	UStaticMeshComponent *SwitchMeshComp;
@@ -20,7 +20,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	AExitDoor *ExitDoor;
-	
+
 	FRotator SwitchCurrentRotation;
 
 public:

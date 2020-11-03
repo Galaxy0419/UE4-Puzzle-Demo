@@ -70,7 +70,7 @@ void AAICharacter::BeginPlay()
 	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnInfo.OverrideLevel = GetLevel();
 	SpawnInfo.ObjectFlags |= RF_Transient;
-	
+
 	ControllerInstance = GetWorld()->SpawnActor<AAIController>(
 		AIControllerClassOverride, GetActorLocation(), GetActorRotation(), SpawnInfo);
 	ControllerInstance->Possess(this);
@@ -102,7 +102,7 @@ void AAICharacter::OnStunFinished()
 {
 	/* Deactivate Niagara System */
 	StunNiagComp->Deactivate();
-	
+
 	/* Continue Patrolling */
 	ControllerInstance->Possess(this);
 	ControllerInstance->MoveToLocation(GetActorLocation());

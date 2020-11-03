@@ -10,7 +10,7 @@ UCLASS()
 class ASSIGNMENT_API AFirstAidKit final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
-	
+
 private:
 	UStaticMeshComponent *FirstAidKitMeshComp;
 

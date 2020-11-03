@@ -10,7 +10,7 @@ UCLASS()
 class ASSIGNMENT_API AFuse final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
-	
+
 private:
 	UStaticMeshComponent *FuseMeshComp;
 

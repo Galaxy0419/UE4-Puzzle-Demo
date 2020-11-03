@@ -18,7 +18,7 @@ UCLASS()
 class ASSIGNMENT_API AMainLevelScriptActor final : public ALevelScriptActor
 {
 	GENERATED_BODY()
-	
+
 private:
 	UPROPERTY()
 	UUserWidget *PauseWBP;
@@ -28,10 +28,10 @@ private:
 
 	bool bBinaryDoorOpened;
 	ULevelSequencePlayer *IntroSequencePlayer;
-	
+
 	UPROPERTY(EditAnywhere)
 	ALaserCutter *LaserCutter;
-	
+
 	UPROPERTY(EditAnywhere)
 	ASimpleDoor *BinarySimpleDoor;
 
@@ -43,7 +43,7 @@ private:
 
 	UFUNCTION()
 	void OnIntroFinished();
-	
+
 	void UpdateGamePlayState(EGamePlayState State) const;
 
 public:

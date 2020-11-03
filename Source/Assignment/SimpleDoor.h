@@ -9,7 +9,7 @@ UCLASS()
 class ASSIGNMENT_API ASimpleDoor : public AActor
 {
 	GENERATED_BODY()
-	
+
 private:
 	UStaticMeshComponent *SimpleDoorMeshComp;
 	UMaterialInstanceDynamic *DoorDynamicMaterial;

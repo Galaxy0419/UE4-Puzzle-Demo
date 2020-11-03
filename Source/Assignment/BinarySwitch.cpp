@@ -32,7 +32,7 @@ ABinarySwitch::ABinarySwitch()
 	ClickAudioComp->SetSound(ClickSoundAsset.Object);
 
 	ClickAudioComp->bAutoActivate = false;
-	
+
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Binary Switch Widget"));
 	ItemWidgetComp->SetupAttachment(RootComponent);

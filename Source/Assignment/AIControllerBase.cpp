@@ -35,7 +35,7 @@ void AAIControllerBase::BeginPlay()
 void AAIControllerBase::OnPlayerInSight(AActor *Player, FAIStimulus Stimulus)
 {
 	APawn *PlayerPawn = Cast<APawn>(Player);
-	
+
 	if (PlayerPawn && PlayerPawn->IsPlayerControlled()) {
 		if (Stimulus.WasSuccessfullySensed()) {
 			TargetPlayer = PlayerPawn;

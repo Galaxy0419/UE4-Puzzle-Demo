@@ -36,7 +36,7 @@ AExitDoor::AExitDoor()
 void AExitDoor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	UMaterial *DoorMaterial = LoadObject<UMaterial>(nullptr, TEXT("Material'/Game/Materials/M_Door.M_Door'"));
 	DoorDynamicMaterial = UKismetMaterialLibrary::CreateDynamicMaterialInstance(GetWorld(), DoorMaterial);
 	ExitDoorMeshComp->SetMaterial(0, DoorDynamicMaterial);

@@ -70,7 +70,7 @@ APlayerCharacter::APlayerCharacter()
 	PantAudioComp->SetSound(PantSoundAsset.Object);
 
 	PantAudioComp->bAutoActivate = false;
-	
+
 	/* Animation Assets Loading */
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
 		FireAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Fire.AM_Fire'"));
@@ -79,7 +79,7 @@ APlayerCharacter::APlayerCharacter()
 	static ConstructorHelpers::FObjectFinder<UAnimMontage>
         DeathAnimAsset(TEXT("AnimMontage'/Game/Mannequin/Animations/AM_Death.AM_Death'"));
 	DeathAnim = DeathAnimAsset.Object;
-	
+
 	/* Actor Damage Binding */
 	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::OnCharacterTakeDamage);
 

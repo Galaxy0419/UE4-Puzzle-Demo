@@ -20,9 +20,9 @@ AStunGrenade::AStunGrenade()
 	static ConstructorHelpers::FObjectFinder<UMaterial>
 		GrenadeMaterialAsset(TEXT("Material'/Game/Materials/M_StunGrenade.M_StunGrenade'"));
 	GrenadeMeshComp->SetMaterial(0, GrenadeMaterialAsset.Object);
-	
+
 	GrenadeMeshComp->SetRelativeScale3D(FVector(0.125f));
-	
+
 	/* Lightning Niagara Particle System */
 	LightningNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Lightning Niagara Particle System"));
 	LightningNiagComp->SetupAttachment(RootComponent);
@@ -53,7 +53,7 @@ AStunGrenade::AStunGrenade()
 
 	StunSphereComp->SetSphereRadius(0.0f);
 	StunSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AStunGrenade::OnSphereBeginOverlap);
-	
+
 	/* Load Explosion Decal Material */
 	static ConstructorHelpers::FObjectFinder<UMaterial>
 		ExplosionDecalAsset(TEXT("Material'/Game/Materials/M_ExplosionDecal.M_ExplosionDecal'"));

@@ -11,7 +11,7 @@ UCLASS()
 class ASSIGNMENT_API ASimpleKey final : public AActor, public IInteractable
 {
 	GENERATED_BODY()
-	
+
 private:
 	UStaticMeshComponent *SimpleKeyMeshComp;
 

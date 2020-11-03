@@ -19,7 +19,7 @@ AGrenadeLauncher::AGrenadeLauncher()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
 		GrenadeLauncherAsset(TEXT("StaticMesh'/Game/Mannequin/Weapon/Mesh/SM_GrenadeLauncher.SM_GrenadeLauncher'"));
 	GrenadeLauncherMeshComp->SetStaticMesh(GrenadeLauncherAsset.Object);
-	
+
 	/* Muzzle Smoke Niagara Component */
 	FireNiagComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Weapon Muzzle Smoke Niagara Paricle System"));
 	FireNiagComp->SetupAttachment(RootComponent);
@@ -41,7 +41,7 @@ AGrenadeLauncher::AGrenadeLauncher()
 
 	FireAudioComp->bAutoActivate = false;
 	FireAudioComp->SetRelativeLocation(MuzzleLocation);
-	
+
 	/* Widget Component */
 	ItemWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Grenade Launcher"));
 	ItemWidgetComp->SetupAttachment(RootComponent);
@@ -83,7 +83,7 @@ void AGrenadeLauncher::Fire(const FVector& Direction)
 	AStunGrenade *Grenade = GetWorld()->SpawnActorDeferred<AStunGrenade>(AStunGrenade::StaticClass(), FTransform(), this);
 	Grenade->ForwardVector = Direction;
 	UGameplayStatics::FinishSpawningActor(Grenade, FTransform(FireNiagComp->GetComponentToWorld().GetLocation()));
-	
+
 	/* Play Particle Effects */
 	FireNiagComp->Activate(true);
 

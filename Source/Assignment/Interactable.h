@@ -16,7 +16,7 @@ class UInteractable : public UInterface
 class ASSIGNMENT_API IInteractable
 {
 	GENERATED_BODY()
-	
+
 public:
 	UWidgetComponent *ItemWidgetComp;
 

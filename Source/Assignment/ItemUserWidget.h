@@ -9,7 +9,7 @@ UCLASS(meta = (DisableNativeTick))
 class ASSIGNMENT_API UItemUserWidget final : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock *TitleText;

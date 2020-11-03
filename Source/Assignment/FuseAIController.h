@@ -8,7 +8,7 @@ UCLASS()
 class ASSIGNMENT_API AFuseAIController final : public AAIControllerBase
 {
 	GENERATED_BODY()
-	
+
 private:
 	uint8 PatrolIndex;
 	TArray<FVector> PatrolPoints;

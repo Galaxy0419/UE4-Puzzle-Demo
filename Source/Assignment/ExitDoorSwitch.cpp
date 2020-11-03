@@ -51,7 +51,7 @@ AExitDoorSwitch::AExitDoorSwitch()
 void AExitDoorSwitch::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	/* Create Widget */
 	UClass *ItemWidgetClass = StaticLoadClass(UItemUserWidget::StaticClass(),
 		nullptr, TEXT("WidgetBlueprint'/Game/UIs/WBP_Item_Description.WBP_Item_Description_C'"));

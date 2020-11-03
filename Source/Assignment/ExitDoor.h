@@ -10,7 +10,7 @@ UCLASS()
 class ASSIGNMENT_API AExitDoor final : public AActor
 {
 	GENERATED_BODY()
-	
+
 private:
 	UBoxComponent *ExitBoxComp;
 	UStaticMeshComponent *ExitDoorMeshComp;

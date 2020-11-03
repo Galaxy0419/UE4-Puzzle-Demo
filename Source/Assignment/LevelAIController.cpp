@@ -3,7 +3,7 @@
 void ALevelAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult &Result)
 {
 	Super::OnMoveCompleted(RequestID, Result);
-	
+
 	if (TargetPlayer) {
 		MoveToLocation(TargetPlayer->GetActorLocation());
 	} else {

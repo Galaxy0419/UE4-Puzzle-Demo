@@ -10,7 +10,7 @@ UCLASS(meta = (DisableNativeTick))
 class ASSIGNMENT_API UHUDUserWidget final : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar *HealthProgressBar;
