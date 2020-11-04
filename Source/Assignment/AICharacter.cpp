@@ -65,14 +65,8 @@ void AAICharacter::BeginPlay()
 	Super::BeginPlay();
 
 	/* Create AI Controller Instance */
-	FActorSpawnParameters SpawnInfo;
-	SpawnInfo.Instigator = GetInstigator();
-	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	SpawnInfo.OverrideLevel = GetLevel();
-	SpawnInfo.ObjectFlags |= RF_Transient;
-
 	ControllerInstance = GetWorld()->SpawnActor<AAIController>(
-		AIControllerClassOverride, GetActorLocation(), GetActorRotation(), SpawnInfo);
+		AIControllerClassOverride, GetActorLocation(), GetActorRotation());
 	ControllerInstance->Possess(this);
 
 	ControllerInstance->MoveToLocation(GetActorLocation());
@@ -96,6 +90,7 @@ void AAICharacter::Stun()
 	/* Stop AI Movement */
 	ControllerInstance->StopMovement();
 	ControllerInstance->UnPossess();
+	ControllerInstance->Destroy();
 }
 
 void AAICharacter::OnStunFinished()
@@ -104,6 +99,8 @@ void AAICharacter::OnStunFinished()
 	StunNiagComp->Deactivate();
 
 	/* Continue Patrolling */
+	ControllerInstance = GetWorld()->SpawnActor<AAIController>(
+		AIControllerClassOverride, GetActorLocation(), GetActorRotation());
 	ControllerInstance->Possess(this);
 	ControllerInstance->MoveToLocation(GetActorLocation());
 
